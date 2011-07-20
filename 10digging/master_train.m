@@ -30,7 +30,7 @@ for i = 1:network.num_isa_layers
 end
 
 %% extract unsup training data
-for i = 1:network.num_isa_layers-1 %1 and 2 layers (since 3rd layer is the same size)       
+for i = 1:network.num_isa_layers %1 and 2 layers (since 3rd layer is the same size)       
     params_ex.spatial_size = network.isa{i}.fovea.spatial_size;
     params_ex.temporal_size = network.isa{i}.fovea.temporal_size;
     params_ex.num_patches = num_unsup_samples_per_clip(i);            

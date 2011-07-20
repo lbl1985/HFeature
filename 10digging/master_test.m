@@ -1,8 +1,8 @@
 path = './'; %current folder
 
 % ***CHANGE TO DESIRED PATHS***
-params.afspath = '/*yourfolder*/';
-params.savepath = '/*yourfolder*/'; %path to save intermediate (before svm classification) results
+params.afspath = '/root/Documents/MATLAB/work/HFeature/';
+params.savepath = '/root/Documents/MATLAB/work/HFeature/Results/Hollwood_median/'; %path to save intermediate (before svm classification) results
 % params.jacketenginepath = '/**/jacket/engine/'; % option to use Jacket GPU code for MATLAB http://www.accelereyes.com/
 
 % option: dense sampling parameter
@@ -92,3 +92,4 @@ params.testid = maketestid(params, network);
 %% execute
 fprintf('\n--- Feature extraction and classification (Hollywood2) ---\n')
 test_features_s2isa(network, params)
+send_mail_message('herbert19lee', 'HFfeature Test is DONE', 'FYI');
