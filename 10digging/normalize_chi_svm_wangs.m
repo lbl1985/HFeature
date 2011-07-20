@@ -76,7 +76,10 @@ end
 
 %% load labels, run svm
 
-actions = textread([infopath, 'classes.txt'], '%s\n');
+% actions = textread([infopath, 'classes.txt'], '%s\n');
+    actions = {'AnswerPhone', 'DriveCar', 'Eat', 'FightPerson', ...
+        'GetOutCar', 'HandShake', 'HugPerson', 'Kiss','Run', ...
+        'SitDown', 'SitUp', 'StandUp'};
 l = length(actions);
 
 %%------------------ subsample training data ---------------------------
