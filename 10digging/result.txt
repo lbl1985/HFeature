@@ -1,0 +1,1 @@
+3 th initialization: mean_ap = 0.432711, mean_acc = 92.222851, km_obj = 74052184.000000
