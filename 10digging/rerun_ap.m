@@ -17,5 +17,9 @@ end
 
 fprintf('---------------RESULTS---------------\n');
 for ini_idx = 1:params.num_km_init
+    fid = fopen('result.txt', 'w');
+    fprintf(fid, '%d th initialization: mean_ap = %f, mean_acc = %f, km_obj = %f\n', ini_idx, mean_ap_list(ini_idx), mean_acc_list(ini_idx), km_obj{ini_idx});
     fprintf('%d th initialization: mean_ap = %f, mean_acc = %f, km_obj = %f\n', ini_idx, mean_ap_list(ini_idx), mean_acc_list(ini_idx), km_obj{ini_idx});
 end
+fclose(fid);
+send_mail_message('herbert19lee', 'rerun_ap is DONE', 'GREAT', 'result.txt');
