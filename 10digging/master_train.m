@@ -1,7 +1,7 @@
 function master_train(vid_file_string, path)
 
 %% set paths
-
+send_mail_message('herbert19lee', 'HFfeature Train is begin', datestr(now));
 addpath(path);
 addpath([path, '/activation_functions/']);
 addpath([path, '/mmread/']);
@@ -46,3 +46,4 @@ train_isa(network, data_path_file_name{1}, bases_path, set_training_params(1, ne
 %% execute train l2
 network = build_network(network_params, 1, bases_path);
 train_isa(network, data_path_file_name{2}, bases_path, set_training_params(2, network_params));
+send_mail_message('herbert19lee', 'HFfeature Train finished', datestr(now));
