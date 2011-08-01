@@ -36,7 +36,7 @@ for i = 1:network.num_isa_layers %1 and 2 layers (since 3rd layer is the same si
     params_ex.num_patches = num_unsup_samples_per_clip(i);            
     
     %% execute extract data (we do with separate computers)    
-    extract_unsupervised_training_data_hw2(vid_file_string, data_path_file_name{i}, params_ex);
+%     extract_unsupervised_training_data_hw2(vid_file_string, data_path_file_name{i}, params_ex);
     
 end
 
