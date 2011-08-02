@@ -1,8 +1,8 @@
 path = './'; %current folder
 
 % ***CHANGE TO DESIRED PATHS***
-params.afspath = '/root/Documents/MATLAB/work/HFeature/';
-params.savepath = '/root/Documents/MATLAB/work/HFeature/Results/Hollwood_median/'; %path to save intermediate (before svm classification) results
+params.afspath = '/Users/herbert19lee/Documents/MATLAB/work/HFeature/';
+params.savepath = '/Users/herbert19lee/Documents/MATLAB/work/HFeature/Results/Hollwood_median/'; %path to save intermediate (before svm classification) results
 % params.jacketenginepath = '/**/jacket/engine/'; % option to use Jacket GPU code for MATLAB http://www.accelereyes.com/
 
 % option: dense sampling parameter
