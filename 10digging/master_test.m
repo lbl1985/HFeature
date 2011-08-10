@@ -1,8 +1,11 @@
 path = './'; %current folder
 
 % ***CHANGE TO DESIRED PATHS***
-params.afspath = '/Users/herbert19lee/Documents/MATLAB/work/HFeature/';
-params.savepath = '/Users/herbert19lee/Documents/MATLAB/work/HFeature/Results/Hollwood_median/'; %path to save intermediate (before svm classification) results
+myfolder = which('main_control.m');
+myfolder = myfolder(1:strfind(myfolder, 'main_control.m') - 1);
+
+params.afspath = myfolder;
+params.savepath = fullfile(myfolder, 'Results', 'Hollwood_median'); %path to save intermediate (before svm classification) results
 % params.jacketenginepath = '/**/jacket/engine/'; % option to use Jacket GPU code for MATLAB http://www.accelereyes.com/
 
 % option: dense sampling parameter
