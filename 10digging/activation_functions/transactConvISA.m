@@ -63,6 +63,9 @@ for it = 0: num_subsamples_cfovea-1
     y_filter_spatial = (mod(index, cfovea_spsize)>=starty-1)&(mod(index, cfovea_spsize)< starty+sfovea_spsize-1);
     y_filter_temporal = (mod(index, cfovea_spsize*cfovea_tpsize)>=startt-1)&(mod(index, cfovea_spsize*cfovea_tpsize)<startt+cfovea_spsize*sfovea_tpsize-1);
     
+    spatioDebug = find(y_filter_spatial, 5, 'first');
+    tmpDebug = find(y_filter_temporal~=1, 5, 'first');
+    
     y_filter = logical(y_filter_spatial.*y_filter_temporal);
 
 %% use this to verify y_filter:
