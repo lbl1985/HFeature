@@ -3,7 +3,7 @@ fovea.spatio = isanetwork{1}.spatial_size;
 fovea.temporal = isanetwork{1}.temporal_size;
 
 visRealWork(isanetwork{1}.W, fovea, isRecord);
-% visRealWork(isanetwork{1}.V, fovea);
+% visRealWork(isanetwork{1}.V, fovea, isRecord);
 end
 
 function visRealWork(data, fovea, isRecord)
@@ -14,7 +14,7 @@ end
 function subplotVis(data, nFeature, fovea, isRecord)
 [nRow nCol] = plotPre(fovea);
 if isRecord
-    v1 = videoSaver('trial1.avi', 11);
+    v1 = videoSaver('trial2.avi', 11);
 end
 for i = 1 : nFeature
     tempData = data(i, :);
