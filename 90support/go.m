@@ -8,6 +8,10 @@ if ispc
     workingpath = 'C:\Users\lbl1985\Documents\MATLAB\';
 end
 
+if ismac
+    workingpath = '/Users/herbert19lee/Documents/MATLAB';
+end
+
 switch str
     case ''
         cd (matlabroot);
