@@ -47,6 +47,8 @@ switch str
         cd ('C:\Users\lbl1985\Documents\MATLAB\work\CV\final');
     case 'gui'
         cd ('C:\Users\lbl1985\Documents\MATLAB\work\GUI');
+    case 'hfeature'
+        cd (fullfile(workingpath, 'work', 'HFeature'));
     case 'ind'
         cd ('C:\Users\lbl1985\Documents\MATLAB\work\CV\IndPro');
     case 'irani'
