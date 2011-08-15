@@ -2,7 +2,8 @@ function [w, h] = coverFlow(movie, p, frames, varargin)
     % visualizes some frames
     % frames [startat : step : stopat]
     if nargin < 4,  w = figure;   
-    else w = figure(varargin{1});   delete(w);
+    else
+        w = figure(varargin{1});    clf(w);
     end
     hold on; set(w,p.cflowwindow);                         % set up window
     h = zeros(size(frames));                                                              % handles for every surf
@@ -13,7 +14,7 @@ function [w, h] = coverFlow(movie, p, frames, varargin)
         d = zeros(size(movie(1).cdata, 1), size(movie(1).cdata, 2));
         d(:) = i*3;                                                     % z value = frame number
 %         h(i) = surf(d, obj.movie(frames(i)).cdata, 'FaceAlpha',1-(i/length(frames)));                %draw and map
-        h(i) = surf(d, movie(i).cdata);
+        h(i) = surf(d, movie(frames(i)).cdata);
         set(h(i),p.cflowproperties);                                   % set global surfproperties
     end
     

@@ -15,8 +15,9 @@ v = videopack.video('test.avi',p);
 w = figure();
 for i = p.startframe : p.endframe - p.stackSize + 1    
 %     v.coverflow(p, i : i + p.stackSize -1, w); %fancy coverflow visualization
-    coverflow(v.movie, p, i : i + p.stackSize -1, w); %fancy coverflow visualization
+    coverFlow(v.movie, p, i : i + p.stackSize -1, w); %fancy coverflow visualization
     pause(1/11);
+    disp(['Frame ' num2str(i)]);
 %     close(gcf);
 end
 % v.writevideo(p);
