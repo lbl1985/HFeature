@@ -25,6 +25,13 @@ classdef coverFlow
                 [w h] = obj.coverFlowCore(obj.data);
             end
         end
+    end
+    
+    methods %utility functions
+        function obj = setFrames(specifiedFrames)
+            obj.frames = specifiedFrames;
+            obj.param.stackSize = length(obj.frames);
+        end
         
     end
     

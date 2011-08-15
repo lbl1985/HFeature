@@ -1,11 +1,9 @@
 function [w, h] = coverFlowCore(obj, movie)
     % visualizes some frames
     % frames [startat : step : stopat]
-    if nargin < 5,  w = figure;   
-    else
-        w = figure(obj.figHandel);    clf(w);
-    end
+    w = figure(obj.figHandel);    clf(w);    
     p = obj.param;  frames = obj.frames;
+    
     hold on; set(w,p.cflowwindow);                         % set up window
     h = zeros(size(frames));                                                              % handles for every surf
     warning off all;                                                     % we use smaller surfs than texture
@@ -22,9 +20,10 @@ function [w, h] = coverFlowCore(obj, movie)
         else
             h(i) = surf(d, movie(:, :, frames(nFrameLen - i + 1)));
         end
-        set(h(i),p.cflowproperties);                                   % set global surfproperties
-        title(['Frame ' num2str(frames(i))]);
+        set(h(i),p.cflowproperties);                                   % set global surfproperties        
     end
+    
+    title(['Frame ' num2str(frames(1))]);
     
     hold off
     warning on all;
