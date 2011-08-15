@@ -25,6 +25,6 @@ classdef videoVar < handle
                 obj.nFrame = obj.siz(obj.ndim);
             end
         end        
-    end    
+    end   
 end
 

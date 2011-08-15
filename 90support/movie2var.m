@@ -1,15 +1,15 @@
 function mat = movie2var(filename, isGray, siz)
-% isGray could be []. The program will reserve the original format
+% isGray could be [] or 0. The program will reserve the original format
 if ~ispc
     currPath = pwd;
 end
 video = mmread(filename);
 n = length(video.frames);
+sampleFrame = video.frames(1).cdata;
 
 if isempty(isGray)
     % user dont' specifically require for gray or rgb. Then save it as the
-    % original format
-    sampleFrame = video.frames(1).cdata;
+    % original format    
     if ndims(sampleFrame) > 3
         isGray = 0;
     else
