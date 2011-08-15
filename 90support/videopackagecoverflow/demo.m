@@ -5,10 +5,17 @@ p = params();
 % optional parameter adjustment -> help params
 p.splitVideo = true;
 p.startframe = 1;
-p.endframe = 10;
+p.endframe = 200;
+p.stackSize = 3;
 p.picformat = 'jpg';
+
 
 v = videopack.video('test.avi',p);
 % v.play
-v.coverflow(p,1:6); %fancy coverflow visualization
-v.writevideo(p);
+
+for i = p.startframe : p.endframe - p.stackSize + 1    
+    v.coverflow(p, i : i + p.stackSize -1); %fancy coverflow visualization
+    pause(1/11);
+    close(gcf);
+end
+% v.writevideo(p);

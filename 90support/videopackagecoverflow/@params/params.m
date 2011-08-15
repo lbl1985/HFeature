@@ -51,6 +51,7 @@ classdef params
 	splitVideo = false;
 	startframe = 1;
 	endframe = 12;
+    stackSize = 10;
 	%framestep = 1; not possible because of parfor
     
 
