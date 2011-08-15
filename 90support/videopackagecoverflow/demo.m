@@ -6,7 +6,7 @@ p = params();
 p.splitVideo = true;
 p.startframe = 1;
 p.endframe = 200;
-p.stackSize = 3;
+p.stackSize = 5;
 p.picformat = 'jpg';
 
 
