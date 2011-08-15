@@ -7,13 +7,17 @@ function [w, h] = coverflow(obj, p, frames)
    warning off all;                                                     % we use smaller surfs than texture     
 
    for i=frames
-       d = zeros(obj.info.Height/100, obj.info.Width/100);              %smaller surf for performance
-       d(:) = i;                                                     % z value = frame number
+%        d = zeros(obj.info.Height/100, obj.info.Width/100);              %smaller surf for performance
+       d = zeros(obj.info.Height, obj.info.Width);
+       d(:) = i * 5;                                                     % z value = frame number
        h(i) = surf(d, obj.movie(i).cdata, 'FaceAlpha',1-(i/max(frames)));                %draw and map
        set(h(i),p.cflowproperties);                                   % set global surfproperties
    end
 
    warning on all;
-   view([1,1,1]);
+%    view([1,1,1]);
+    view(3);
+   view3d rot
+   view3d zoom
    %hold off;
 end

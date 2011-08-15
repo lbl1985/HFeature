@@ -21,7 +21,7 @@ function obj = readframes(obj,p)
     
    switch p.converter
        case 'ffmpeg'   
-           if strcmp(computer,'MACI')
+           if strcmp(computer,'MACI') || strcmp(computer, 'MACI64')
                     if ~p.release
                         fprintf(['You are running an Intel Mac\n I will encode frames into ' p.picformat '\n']);
                     end
