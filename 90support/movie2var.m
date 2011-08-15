@@ -17,11 +17,15 @@ if isempty(isGray)
     end
 end
 
-if siz ~= 1
-    dimensions = size(sampleFrame);
-    dimensions = dimensions(1:2);
+dimensions = size(sampleFrame);
+dimensions = dimensions(1:2);
+
+if siz ~= 1    
     numrows = ceil(dimensions(1) * siz);
     numcols = ceil(dimensions(2) * siz);
+else
+    numrows = dimensions(1);
+    numcols = dimensions(2);
 end
 
 if ~isGray
