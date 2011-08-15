@@ -52,7 +52,8 @@ classdef video
        
        % visualizes some frames
        % frames [startat : step : stopat]
-       [w h] = coverflow(obj, p, frames);
+%        [w h] = coverflow(obj, p, frames);
+%        [w h] = coverflow(obj, p, frames, fig);
        
        % converts a 3dim matrix (e.g. energy) into a 
        % MATLAB movie and vice versa

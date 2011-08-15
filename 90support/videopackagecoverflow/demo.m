@@ -12,10 +12,10 @@ p.picformat = 'jpg';
 
 v = videopack.video('test.avi',p);
 % v.play
-
+w = figure();
 for i = p.startframe : p.endframe - p.stackSize + 1    
-    v.coverflow(p, i : i + p.stackSize -1); %fancy coverflow visualization
+    v.coverflow(p, i : i + p.stackSize -1, w); %fancy coverflow visualization
     pause(1/11);
-    close(gcf);
+%     close(gcf);
 end
 % v.writevideo(p);

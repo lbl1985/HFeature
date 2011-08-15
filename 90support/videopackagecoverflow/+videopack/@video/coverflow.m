@@ -1,7 +1,10 @@
-function [w, h] = coverflow(obj, p, frames)
+function [w, h] = coverflow(obj, p, frames, varargin)
     % visualizes some frames
     % frames [startat : step : stopat]
-    w = figure;    hold on; set(w,p.cflowwindow);                         % set up window
+    if nargin < 4,  w = figure;   
+    else w = figure();
+    end
+    hold on; set(w,p.cflowwindow);                         % set up window
     h = zeros(size(frames));                                                              % handles for every surf
     warning off all;                                                     % we use smaller surfs than texture
 
@@ -9,8 +12,8 @@ function [w, h] = coverflow(obj, p, frames)
         %        d = zeros(obj.info.Height/100, obj.info.Width/100);              %smaller surf for performance
         d = zeros(obj.info.Height, obj.info.Width);
         d(:) = i*3;                                                     % z value = frame number
-        h(i) = surf(d, obj.movie(frames(i)).cdata, 'FaceAlpha',1-(i/length(frames)));                %draw and map
-%         h(i) = surf(d, obj.movie(i).cdata);
+%         h(i) = surf(d, obj.movie(frames(i)).cdata, 'FaceAlpha',1-(i/length(frames)));                %draw and map
+        h(i) = surf(d, obj.movie(i).cdata);
         set(h(i),p.cflowproperties);                                   % set global surfproperties
     end
     
