@@ -1,4 +1,4 @@
-function textLocationBatch = calculateFeatureLocations(tmpMovieObj, ClassLabels)
+function [textLocationBatch featureRegular] = calculateFeatureLocations(tmpMovieObj, ClassLabels)
 % croppedVideoObj
 
 displayOffsite = 5;
@@ -24,4 +24,9 @@ for i = 1 : nFeature
     
     textLocationBatch{i} = textLocation;
 end
+
+featureRegular.numFeaturePerRow = numFeaturePerRow;
+featureRegular.numFeaturePerFrame = numFeaturePerFrame;
+featureRegular.numOfSlides = numOfSlides;
+featureRegular.nFeature = nFeature;
     
