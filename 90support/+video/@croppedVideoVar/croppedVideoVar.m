@@ -1,4 +1,4 @@
-classdef croppedVideoVar < videoVar
+classdef croppedVideoVar < video.videoVar
     %Crop the video data according to specified spatial_size parameter.
     
     properties
@@ -8,11 +8,11 @@ classdef croppedVideoVar < videoVar
     
     methods
         function obj = croppedVideoVar(inputData, input_spatial_size)
-            obj = obj@videoVar(inputData);
+            obj = obj@video.videoVar(inputData);
             obj.spatial_size = input_spatial_size;
-            obj.croppedVideo = zeros(floor(size(inputData, 1) / input_spatial_size) ...
+            obj.croppedVideo = uint8(zeros(floor(size(inputData, 1) / input_spatial_size) ...
                 * input_spatial_size, floor(size(inputData, 2) / input_spatial_size) ...
-                * input_spatial_size, size(inputData, 3), size(inputData, 4));
+                * input_spatial_size, size(inputData, 3), size(inputData, 4)));
         end
     end
     
