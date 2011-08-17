@@ -9,13 +9,13 @@ classdef croppedVideoVar < video.videoVar
     end
     
     methods
-        function obj = croppedVideoVar(inputData, input_spatial_size, input_temporal_size)
+        function obj = croppedVideoVar(inputData, fovea)
             obj = obj@video.videoVar(inputData);
-            obj.spatial_size = input_spatial_size;
-            obj.temporal_size = input_temporal_size;
-            obj.croppedVideo = uint8(zeros(floor(size(inputData, 1) / input_spatial_size) ...
-                * input_spatial_size, floor(size(inputData, 2) / input_spatial_size) ...
-                * input_spatial_size, size(inputData, 3), size(inputData, 4)));
+            obj.spatial_size = fovea.spatial_size;
+            obj.temporal_size = fovea.temporal_size;
+            obj.croppedVideo = uint8(zeros(floor(size(inputData, 1) / fovea.spatial_size) ...
+                * fovea.spatial_size, floor(size(inputData, 2) / fovea.spatial_size) ...
+                * fovea.spatial_size, size(inputData, 3), size(inputData, 4)));
             obj.croppedSiz = size(obj.croppedVideo);
         end        
     end

@@ -17,7 +17,7 @@ for i = 1 : nFiles
         error('the file %s is not available', tmpMovieName);
     end
     tmpMovieVar = movie2var(tmpMovieName, 0, 1);
-    tmpMovieObj = video.croppedVideoVar(tmpMovieVar, fovea.spatial_size, fovea.temporal_size);
+    tmpMovieObj = video.croppedVideoVar(tmpMovieVar, fovea);
     tmpMovieObj.cropVideoForFeatureDetection();
     
     coverFlowObj = coverflow.coverFlowOrig(tmpMovieObj);
