@@ -1,4 +1,4 @@
-classdef videoVar < handle
+classdef videoVar
     %Include all basic functionality may applied to a video varable in
     %Matalb
     %   properties  : 
