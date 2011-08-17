@@ -1,4 +1,4 @@
-classdef coverFlow
+classdef coverFlowOrig
     %COVERFLOW Summary of this class goes here
     %   Detailed explanation goes here
     
@@ -14,7 +14,7 @@ classdef coverFlow
     end
     
     methods
-        function obj = coverFlow(inputData)
+        function obj = coverFlowOrig(inputData)
             obj.data = inputData;
         end
         
