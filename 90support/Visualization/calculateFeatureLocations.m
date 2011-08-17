@@ -1,4 +1,4 @@
-function calculateFeatureLocations(tmpMovieObj, ClassLabels)
+function textLocationBatch = calculateFeatureLocations(tmpMovieObj, ClassLabels)
 % croppedVideoObj
 
 displayOffsite = 5;
@@ -10,6 +10,8 @@ nFeature = numFeaturePerFrame * numOfSlides;
 
 assert(nFeature == length(ClassLabels), 'nFeature Calculated is not equal to Experimental Results');
 
+textLocationBatch = cell(nFeature, 1);
+
 for i = 1 : nFeature
     slideIndex = mod(i / numFeaturePerFrame);
     rowIndex = mod(slideIndex / numFeaturePerRow);
@@ -19,5 +21,7 @@ for i = 1 : nFeature
     textLocation(:, 1) = (rowIndex - 1) * tmpMovieObj.spatial_size + displayOffsite;
     textLocation(:, 2) = (colIndex - 1) * tmpMovieObj.spatial_size + displayOffsite;
     textLocation(:, 3) = slideIndex * (1 : tmpMovieObj.temporal_size)';
+    
+    textLocationBatch{i} = textLocation;
 end
     
