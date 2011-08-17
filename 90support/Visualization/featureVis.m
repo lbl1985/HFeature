@@ -18,9 +18,9 @@ for i = 1 : nFiles
     end
     tmpMovieVar = movie2var(tmpMovieName, 0, 1);
     tmpMovieObj = video.videoVar(tmpMovieVar);
-    tmpMovieObj = cutFrameBySpatialSize(tmpMovieVar, fovea.spatial_size);
+    tmpMovieObj = cutFrameBySpatialSize(tmpMovieObj, fovea.spatial_size);
 %     tmpMovieVar = loadclip_3dm(tmpMovieName, fovea.spatial_size, 0, 0); 
-    coverFlowObj = coverFlow(tmpMovieVar);
+    coverFlowObj = coverFlow(tmpMovieObj);
     coverFlowObj = coverFlowObj.setFrameRangeAll;
     coverFlowObj.playConsecutiveCoverFlow;
     clear coverFlowObj
@@ -29,5 +29,5 @@ end
 end
 
 function outputVideo = cutFrameBySpatialSize(inputVideo, spatial_size)
-siz = size(inputVideo);
-nframe = 
+
+end
