@@ -34,10 +34,10 @@ classdef coverFlow
                 if isobject(obj.data)
                     [w h] = obj.coverFlowCore(obj.data.Data);
                 else
-                    [w h] = obj.coverFlowCore(obj.data.Data);
+                    [w h] = obj.coverFlowCore(obj.data);
                 end 
                 pause(1/11);
-                disp(['Frame ' num2str(i)]);
+%                 disp(['Frame ' num2str(i)]);
             end
         end
     end
