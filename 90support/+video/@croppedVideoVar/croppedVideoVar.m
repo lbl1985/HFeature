@@ -4,6 +4,7 @@ classdef croppedVideoVar < video.videoVar
     properties
         spatial_size
         croppedVideo
+        croppedSiz
     end
     
     methods
@@ -13,6 +14,7 @@ classdef croppedVideoVar < video.videoVar
             obj.croppedVideo = uint8(zeros(floor(size(inputData, 1) / input_spatial_size) ...
                 * input_spatial_size, floor(size(inputData, 2) / input_spatial_size) ...
                 * input_spatial_size, size(inputData, 3), size(inputData, 4)));
+            obj.croppedSiz = size(obj.croppedVideo);
         end
     end
     
