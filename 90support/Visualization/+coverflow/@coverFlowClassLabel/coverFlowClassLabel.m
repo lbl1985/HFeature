@@ -6,10 +6,12 @@ classdef coverFlowClassLabel < coverflow.coverFlowOrig
         classLabels
         textLocationBatch
         numFeaturePerRow;
+        numFeaturePerCol;
         numFeaturePerFrame;
         numOfSlides;
         nFeature;
         
+        colorBoard = uint8(round(varycolor(3000) * 255));
         displayOffsite = 5;
     end
     
@@ -21,6 +23,7 @@ classdef coverFlowClassLabel < coverflow.coverFlowOrig
             obj.classLabels = inputClassLabels;
             
             obj.numFeaturePerRow = croppedVideoObj.siz(1) / croppedVideoObj.spatial_size;
+            obj.numFeaturePerCol = croppedVideoObj.siz(2) / croppedVideoObj.spatial_size;
             obj.numFeaturePerFrame = croppedVideoObj.siz(1) * croppedVideoObj.siz(2) / (croppedVideoObj.spatial_size^2);
             obj.numOfSlides = croppedVideoObj.siz(end) / croppedVideoObj.temporal_size;
             obj.nFeature = obj.numFeaturePerFrame * obj.numOfSlides;
@@ -56,16 +59,21 @@ classdef coverFlowClassLabel < coverflow.coverFlowOrig
                 if t == 1, obj.figHandel = figure();
                 else figure(obj.figHandel); end
                 
-                if obj.data.ndim == 4
-                    imshow(obj.data.Data(:, :, :, t));
-                else
-                    imshow(obj.data.Data(:, :, t));
-                end
                 featureIndex = obj.featureIndexOnThisFrame(t);
+                
+                if obj.data.ndim == 4
+                    img = obj.transactColor(obj.data.Data(:, :, :, t), featureIndex);
+                    imshow(img);
+                else
+                    img = obj.transactColor(obj.data.Data(:, :, t), featureIndex);
+                    imshow(img);
+                end
+                
                 for j = featureIndex(1) : featureIndex(end)
                     location = obj.calculateFeatureLocation(j);
                     try
-                        text(location(2), location(1), num2str(obj.classLabels(j)));
+                        text(location(2), location(1), num2str(obj.classLabels(j)), ...
+                        'FontSize', 6);
                     catch ME
                         display(['Frame ' num2str(t)]);
                         dispMEstack(ME.stack);
@@ -78,6 +86,20 @@ classdef coverFlowClassLabel < coverflow.coverFlowOrig
     end
     
     methods    % Utility functions
+        function image = transactColor(obj, image, featureIndex)
+            spatial_size = obj.data.spatial_size;
+            for i = featureIndex(1) : featureIndex(end)
+                typeId = obj.classLabels(i);
+                color = reshape(obj.colorBoard(typeId, :), [1 1 3]);
+                colorPatch = repmat(color, obj.data.spatial_size, obj.data.spatial_size);
+                
+                [rowIndex colIndex] = obj.calculateRowColIndex(i);
+                image((rowIndex-1) * spatial_size + 1 : rowIndex * spatial_size, ...
+                    (colIndex - 1) * spatial_size + 1: colIndex * spatial_size, :) = ...
+                    image((rowIndex-1) * spatial_size + 1 : rowIndex * spatial_size, ...
+                    (colIndex - 1) * spatial_size + 1: colIndex * spatial_size, :) + colorPatch;                
+            end
+        end
         function engraveText(obj, w)
             figure(w);
             for i = 1 : obj.param.stackSize
@@ -85,21 +107,26 @@ classdef coverFlowClassLabel < coverflow.coverFlowOrig
                 featureIndex = obj.featureIndexOnThisFrame(t);
                 for j = featureIndex(1) : featureIndex(end)
                     location = obj.calculateFeatureLocation(j);
-                    text(location(1), location(2), num2str(obj.classLabels(j)));
+                    text(location(1), location(2), num2str(obj.classLabels(j)), ...
+                        'FontSize', 3);
                 end
             end                
         end
         
         function textLocation = calculateFeatureLocation(obj, i)
+            [rowIndex colIndex] = obj.calculateRowColIndex(i);
+            
+            textLocation = zeros(1, 2);
+            textLocation(1) = (rowIndex - 1) * obj.data.spatial_size + obj.displayOffsite;
+            textLocation(2) = (colIndex - 1) * obj.data.spatial_size + obj.displayOffsite;
+        end
+        
+        function [rowIndex colIndex] = calculateRowColIndex(obj, i)
             slideIndex = mod(i , obj.numFeaturePerFrame);
             if slideIndex == 0, slideIndex = obj.numFeaturePerFrame; end
             rowIndex = mod(slideIndex , obj.numFeaturePerRow);
             if rowIndex == 0, rowIndex = obj.numFeaturePerRow; end
             colIndex = ceil(slideIndex / obj.numFeaturePerRow);
-
-            textLocation = zeros(1, 2);
-            textLocation(1) = (rowIndex - 1) * obj.data.spatial_size + obj.displayOffsite;
-            textLocation(2) = (colIndex - 1) * obj.data.spatial_size + obj.displayOffsite;
         end
         
         function featureIndex = featureIndexOnThisFrame(obj, t)
