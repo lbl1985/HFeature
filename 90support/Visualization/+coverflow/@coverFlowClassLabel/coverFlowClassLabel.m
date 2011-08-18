@@ -18,7 +18,7 @@ classdef coverFlowClassLabel < coverflow.coverFlowOrig
             assert(isobject(croppedVideoObj), 'croppedVideoObj has to be object');
             
             obj = obj@coverflow.coverFlowOrig(croppedVideoObj);
-            obj.classLabel = inputClassLabels;
+            obj.classLabels = inputClassLabels;
             
             obj.numFeaturePerRow = croppedVideoObj.siz(1) / croppedVideoObj.spatial_size;
             obj.numFeaturePerFrame = croppedVideoObj.siz(1) * croppedVideoObj.siz(2) / (croppedVideoObj.spatial_size^2);
@@ -28,32 +28,34 @@ classdef coverFlowClassLabel < coverflow.coverFlowOrig
             assert(obj.nFeature == length(obj.classLabels), ...
                 'nFeature Calculated is not equal to Experimental Results');
             
-            obj.frameRange = 1 : 10;
+            
         end        
     end
     
     methods     % Ability Functions
         function [w h] = playConsecutiveCoverFlow(obj)
+            obj.framesRange = 1 : 10;
             obj.figHandel = figure();
             % frameRange is the showing frames indicator.
-            for i = obj.frameRange(1) : obj.frameRange(end - obj.param.stackSize + 1)
-                obj = obj.setFrames(obj.frameRange(i) : obj.frameRange(i + obj.param.stackSize -1));
+            for i = obj.framesRange(1) : obj.framesRange(end - obj.param.stackSize + 1)
+                obj = obj.setFrames(obj.framesRange(i) : obj.framesRange(i + obj.param.stackSize -1));
                 if isobject(obj.data)
                     [w h] = obj.coverFlowCore(obj.data.Data);
                 else
                     [w h] = obj.coverFlowCore(obj.data);
                 end
                 pause(1/11);
-                obj.engraveText(h);
+                obj.engraveText(w);
             end
         end
         
-        function engraveText(obj, h)
+        function engraveText(obj, w)
+            figure(w);
             for i = 1 : obj.param.stackSize
-                figure(h(i));   t = obj.frames(i);
+                t = obj.frames(i);
                 slideIndex = floor(t/ obj.data.temporal_size); 
                 featureIndex = slideIndex * obj.numFeaturePerFrame + 1 : ...
-                    (slideIndex + 1) * obj.numFeaturePerFarme;
+                    (slideIndex + 1) * obj.numFeaturePerFrame;
                 for j = featureIndex(1) : featureIndex(end)
                     location = obj.calculateFeatureLocation(j);
                     text(location(1), location(2), num2str(obj.classLabels(j)));
@@ -62,8 +64,8 @@ classdef coverFlowClassLabel < coverflow.coverFlowOrig
         end
         
         function textLocation = calculateFeatureLocation(obj, i)
-            slideIndex = mod(i / obj.numFeaturePerFrame);
-            rowIndex = mod(slideIndex / obj.numFeaturePerRow);
+            slideIndex = mod(i , obj.numFeaturePerFrame);
+            rowIndex = mod(slideIndex , obj.numFeaturePerRow);
             colIndex = ceil(slideIndex / obj.numFeaturePerRow);
 
             textLocation = zeros(1, 2);
