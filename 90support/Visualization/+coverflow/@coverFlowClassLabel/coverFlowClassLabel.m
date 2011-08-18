@@ -13,6 +13,8 @@ classdef coverFlowClassLabel < coverflow.coverFlowOrig
         
         colorBoard = uint8(round(varycolor(3000) * 255));
         displayOffsite = 5;
+        
+        savedVideoName = fullfile(getProjectBaseFolder, 'Results', 'coverFlowClassLabelTmpVideo.avi');
     end
     
     methods     %initialization function
@@ -56,32 +58,47 @@ classdef coverFlowClassLabel < coverflow.coverFlowOrig
     methods     % Figure based class label. The saved generated images
         function visualizeOnImage(obj)
             for t = 1 : obj.data.nFrame
-                if t == 1, obj.figHandel = figure();
-                else figure(obj.figHandel); end
-                
-                featureIndex = obj.featureIndexOnThisFrame(t);
-                
-                if obj.data.ndim == 4
-                    img = obj.transactColor(obj.data.Data(:, :, :, t), featureIndex);
-                    imshow(img);
-                else
-                    img = obj.transactColor(obj.data.Data(:, :, t), featureIndex);
-                    imshow(img);
-                end
-                
-                for j = featureIndex(1) : featureIndex(end)
-                    location = obj.calculateFeatureLocation(j);
-                    try
-                        text(location(2), location(1), num2str(obj.classLabels(j)), ...
-                        'FontSize', 6);
-                    catch ME
-                        display(['Frame ' num2str(t)]);
-                        dispMEstack(ME.stack);
-                    end
-                end                
-                title(['Frame ' num2str(t)]);
-                pause(1/11);
+                obj = obj.visualizationOnImageCore1(t);
+%                 title(['Frame ' num2str(t)]);
             end
+        end
+        
+        function saveVisualizaedAsVideo(obj)
+            s1 = video.videoSaver(obj.savedVideoName, 11);            
+            for t = 1 : obj.data.nFrame
+                obj = obj.visualizationOnImageCore1(t);
+                
+                s1.fig = obj.figHandel;
+                s1.saveCore();
+            end
+            s1.saveClose();
+        end
+        
+        function obj = visualizationOnImageCore1(obj, t)
+            if t == 1, obj.figHandel = figure();
+            else figure(obj.figHandel); end
+            
+            featureIndex = obj.featureIndexOnThisFrame(t);
+            
+            if obj.data.ndim == 4
+                img = obj.transactColor(obj.data.Data(:, :, :, t), featureIndex);
+                imshow(img, 'border', 'tight');
+            else
+                img = obj.transactColor(obj.data.Data(:, :, t), featureIndex);
+                imshow(img, 'border', 'tight');
+            end
+            
+            for j = featureIndex(1) : featureIndex(end)
+                location = obj.calculateFeatureLocation(j);
+                try
+                    text(location(2), location(1), num2str(obj.classLabels(j)), ...
+                        'FontSize', 6);
+                catch ME
+                    display(['Frame ' num2str(t)]);
+                    dispMEstack(ME.stack);
+                end
+            end
+            pause(1/11);
         end
     end
     
@@ -100,6 +117,7 @@ classdef coverFlowClassLabel < coverflow.coverFlowOrig
                     (colIndex - 1) * spatial_size + 1: colIndex * spatial_size, :) + colorPatch;                
             end
         end
+        
         function engraveText(obj, w)
             figure(w);
             for i = 1 : obj.param.stackSize

@@ -27,7 +27,8 @@ for i = 1 : nFiles
 %     coverFlowObj = coverFlowObj.setFrameRangeAll;
 %     coverFlowObj.playConsecutiveCoverFlow;
     coverFlowObj = coverflow.coverFlowClassLabel(tmpMovieObj, tmpClassLabel);
-    coverFlowObj.playConsecutiveCoverFlow;
+    coverFlowObj.visualizeOnImage;
+%     coverFlowObj.playConsecutiveCoverFlow;
     clear coverFlowObj
 %     coverFlowObj1.
 end
