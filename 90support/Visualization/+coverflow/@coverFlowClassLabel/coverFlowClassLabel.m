@@ -39,34 +39,16 @@ classdef coverFlowClassLabel < coverflow.coverFlowOrig
     
     methods     % Ability Functions
         function playConsecutiveWholeVideoCoverFlow(obj)
-            % only read the data, but don't return the obj 
-            % Because this class is not handle but value, therefore, it
-            % should not have efforts on the other functions or interfaces
-            if exist(obj.savedVideoName, 'file')
-                tmpVisualizedVar = movie2var(obj.savedVideoName, 0, 1);
-            else
-                obj.saveVisualizedAsVideo();
-            end
-            tmpMovieObj = video.videoVar(tmpVisualizedVar);
-            tmpCoverFlowObj = coverflow.coverFlowOrig(tmpMovieObj);
+            tmpCoverFlowObj = obj.coverFlowPrepare();
             tmpCoverFlowObj = tmpCoverFlowObj.setFrameRangeAll();
             tmpCoverFlowObj.playConsecutiveCoverFlow();
-            
-            
-            
-%             obj.framesRange = 1 : 10;
-%             obj.figHandel = figure();
-%             % frameRange is the showing frames indicator.
-%             for i = obj.framesRange(1) : obj.framesRange(end - obj.param.stackSize + 1)
-%                 obj = obj.setFrames(obj.framesRange(i) : obj.framesRange(i + obj.param.stackSize -1));
-%                 if isobject(obj.data)
-%                     [w h] = obj.coverFlowCore(obj.data.Data);
-%                 else
-%                     [w h] = obj.coverFlowCore(obj.data);
-%                 end
-%                 pause(1/11);
-%                 obj.engraveText(w);
-%             end
+        end
+        
+        function playKeyFramesCoverFlow(obj)
+            tmpCoverFlowObj = obj.coverFlowPrepare();
+            keyFrames = obj.getKeyFrames();
+            tmpCoverFlowObj.framesRange = keyFrames;
+            tmpCoverFlowObj.playConsecutiveCoverFlow();
         end
     end
     
@@ -118,6 +100,19 @@ classdef coverFlowClassLabel < coverflow.coverFlowOrig
     end
     
     methods    % Utility functions
+        function tmpCoverFlowObj = coverFlowPrepare(obj)
+            % only read the data, but don't return the obj 
+            % Because this class is not handle but value, therefore, it
+            % should not have efforts on the other functions or interfaces
+            if exist(obj.savedVideoName, 'file')
+                tmpVisualizedVar = movie2var(obj.savedVideoName, 0, 1);
+            else
+                obj.saveVisualizedAsVideo();
+            end
+            tmpMovieObj = video.videoVar(tmpVisualizedVar);
+            tmpCoverFlowObj = coverflow.coverFlowOrig(tmpMovieObj);
+        end
+        
         function image = transactColor(obj, image, featureIndex)
             spatial_size = obj.data.spatial_size;
             for i = featureIndex(1) : featureIndex(end)
@@ -131,19 +126,6 @@ classdef coverFlowClassLabel < coverflow.coverFlowOrig
                     image((rowIndex-1) * spatial_size + 1 : rowIndex * spatial_size, ...
                     (colIndex - 1) * spatial_size + 1: colIndex * spatial_size, :) + colorPatch;                
             end
-        end
-        
-        function engraveText(obj, w)
-            figure(w);
-            for i = 1 : obj.param.stackSize
-                t = obj.frames(i);                
-                featureIndex = obj.featureIndexOnThisFrame(t);
-                for j = featureIndex(1) : featureIndex(end)
-                    location = obj.calculateFeatureLocation(j);
-                    text(location(1), location(2), num2str(obj.classLabels(j)), ...
-                        'FontSize', 3);
-                end
-            end                
         end
         
         function textLocation = calculateFeatureLocation(obj, i)
@@ -167,6 +149,12 @@ classdef coverFlowClassLabel < coverflow.coverFlowOrig
             slideIndex = floor(t/obj.data.temporal_size);
             featureIndex = slideIndex * obj.numFeaturePerFrame + 1 : ...
                 (slideIndex + 1) * obj.numFeaturePerFrame;
+        end
+        
+        function keyFrames = getKeyFrames(obj)
+            keyFrames = (1 : obj.data.nFrame / obj.data.temporal_size);
+            keyFrames = keyFrames - 1;
+            keyFrames = keyFrames * obj.data.temporal_size + 1;
         end
     end
 end

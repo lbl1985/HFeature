@@ -29,7 +29,7 @@ classdef coverFlowOrig
         
         function [w h] = playConsecutiveCoverFlow(obj)
             obj.figHandel = figure();
-            for i = obj.framesRange(1) : obj.framesRange(end - obj.param.stackSize + 1)
+            for i = 1 : length(obj.framesRange) - obj.param.stackSize + 1;
                 obj = obj.setFrames(obj.framesRange(i : i + obj.param.stackSize -1));
                 if isobject(obj.data)
                     [w h] = obj.coverFlowCore(obj.data.Data);

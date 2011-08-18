@@ -13,7 +13,7 @@ function [w, h] = coverFlowCore(obj, movie)
     for i= 1 : nFrameLen
         %        d = zeros(obj.info.Height/100, obj.info.Width/100);              %smaller surf for performance
         d = zeros(siz(1), siz(2));
-        d(:) = nFrame - i + 1;                                                     % z value = frame number
+        d(:) = nFrameLen - i + 1;                                                     % z value = frame number
 %         h(i) = surf(d, obj.movie(frames(i)).cdata, 'FaceAlpha',1-(i/length(frames)));                %draw and map
         if ndim == 4 
             h(i) = surf(d, movie(:, :, :, frames(nFrameLen - i + 1)));
