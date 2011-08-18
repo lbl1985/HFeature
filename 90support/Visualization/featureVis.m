@@ -20,6 +20,9 @@ for i = 1 : nFiles
     tmpMovieObj = video.croppedVideoVar(tmpMovieVar, fovea);
     tmpMovieObj.cropVideoForFeatureDetection();
     
+    [textLocationBatch featureRegular] = calculateFeatureLocations(tmpMovieObj, ...
+        train_label_all(train_indices{i}.start : train_indices{i}.end));
+    
     coverFlowObj = coverflow.coverFlowOrig(tmpMovieObj);
     coverFlowObj = coverFlowObj.setFrameRangeAll;
     coverFlowObj.playConsecutiveCoverFlow;
