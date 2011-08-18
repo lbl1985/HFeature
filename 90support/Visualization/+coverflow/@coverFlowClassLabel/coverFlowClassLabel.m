@@ -1,4 +1,4 @@
-classdef coverFlowClassLabel < coverFlowOrig
+classdef coverFlowClassLabel < coverflow.coverFlowOrig
     %COVERFLOWCLASSLABEL Summary of this class goes here
     %   Detailed explanation goes here
     
@@ -17,7 +17,7 @@ classdef coverFlowClassLabel < coverFlowOrig
         function obj = coverFlowClassLabel(croppedVideoObj, inputClassLabels)
             assert(isobject(croppedVideoObj), 'croppedVideoObj has to be object');
             
-            obj = obj@coverFlowOrig(croppedVideoObj);
+            obj = obj@coverflow.coverFlowOrig(croppedVideoObj);
             obj.classLabel = inputClassLabels;
             
             obj.numFeaturePerRow = croppedVideoObj.siz(1) / croppedVideoObj.spatial_size;
