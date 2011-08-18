@@ -63,7 +63,7 @@ classdef coverFlowClassLabel < coverflow.coverFlowOrig
             end
         end
         
-        function saveVisualizaedAsVideo(obj)
+        function saveVisualizedAsVideo(obj)
             s1 = video.videoSaver(obj.savedVideoName, 11);            
             for t = 1 : obj.data.nFrame
                 obj = obj.visualizationOnImageCore1(t);
