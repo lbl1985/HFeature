@@ -6,6 +6,8 @@ classdef croppedVideoVar < video.videoVar
         temporal_size
         croppedVideo
         croppedSiz
+        
+        OrigBackup
     end
     
     methods
@@ -21,7 +23,7 @@ classdef croppedVideoVar < video.videoVar
     end
     
     methods
-        function cropVideoForFeatureDetection(obj)
+        function obj = cropVideoForFeatureDetection(obj)
             obj = obj.cropVideoForFeatureDetectionInTime();
             if obj.ndim == 3
                 % do operation for gray images
@@ -36,7 +38,9 @@ classdef croppedVideoVar < video.videoVar
                         1 : floor(obj.siz(2) / obj.spatial_size) * obj.spatial_size, :, t);
                 end
             end
-                
+            % After Processing
+            obj = backupOrigVideo(obj);
+            obj = fitCroppedIntoSlot(obj);
         end
     end
     
@@ -49,6 +53,23 @@ classdef croppedVideoVar < video.videoVar
                 obj.croppedVideo = obj.croppedVideo(:, :, :, 1 : obj.croppedSiz(end));
             end
         end
+        
+        function obj = backupOrigVideo(obj)
+            obj.OrigBackup.Data = obj.Data;
+            obj.OrigBackup.siz = obj.siz;
+            obj.OrigBackup.ndim = obj.ndim;
+            obj.OrigBackup.nFrame = obj.nFrame;
+        end
+        
+        function obj = fitCroppedIntoSlot(obj)
+            obj.Data = obj.croppedVideo;
+            obj.siz = size(obj.Data);
+            obj.nFrame = obj.siz(end);
+            
+            obj.croppedVideo = [];
+            obj.croppedSiz = [];
+        end
+        
     end
 end
 
