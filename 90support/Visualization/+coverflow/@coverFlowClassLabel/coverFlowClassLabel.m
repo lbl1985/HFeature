@@ -48,14 +48,41 @@ classdef coverFlowClassLabel < coverflow.coverFlowOrig
                 obj.engraveText(w);
             end
         end
-        
+    end
+    
+    methods     % Figure based class label. The saved generated images
+        function visualizeOnImage(obj)
+            for t = 1 : obj.data.nFrame
+                if t == 1, obj.figHandel = figure();
+                else figure(obj.figHandel); end
+                
+                if obj.data.ndim == 4
+                    imshow(obj.data.Data(:, :, :, t));
+                else
+                    imshow(obj.data.Data(:, :, t));
+                end
+                featureIndex = obj.featureIndexOnThisFrame(t);
+                for j = featureIndex(1) : featureIndex(end)
+                    location = obj.calculateFeatureLocation(j);
+                    try
+                        text(location(2), location(1), num2str(obj.classLabels(j)));
+                    catch ME
+                        display(['Frame ' num2str(t)]);
+                        dispMEstack(ME.stack);
+                    end
+                end                
+                title(['Frame ' num2str(t)]);
+                pause(1/11);
+            end
+        end
+    end
+    
+    methods    % Utility functions
         function engraveText(obj, w)
             figure(w);
             for i = 1 : obj.param.stackSize
-                t = obj.frames(i);
-                slideIndex = floor(t/ obj.data.temporal_size); 
-                featureIndex = slideIndex * obj.numFeaturePerFrame + 1 : ...
-                    (slideIndex + 1) * obj.numFeaturePerFrame;
+                t = obj.frames(i);                
+                featureIndex = obj.featureIndexOnThisFrame(t);
                 for j = featureIndex(1) : featureIndex(end)
                     location = obj.calculateFeatureLocation(j);
                     text(location(1), location(2), num2str(obj.classLabels(j)));
@@ -65,14 +92,22 @@ classdef coverFlowClassLabel < coverflow.coverFlowOrig
         
         function textLocation = calculateFeatureLocation(obj, i)
             slideIndex = mod(i , obj.numFeaturePerFrame);
+            if slideIndex == 0, slideIndex = obj.numFeaturePerFrame; end
             rowIndex = mod(slideIndex , obj.numFeaturePerRow);
+            if rowIndex == 0, rowIndex = obj.numFeaturePerRow; end
             colIndex = ceil(slideIndex / obj.numFeaturePerRow);
 
             textLocation = zeros(1, 2);
             textLocation(1) = (rowIndex - 1) * obj.data.spatial_size + obj.displayOffsite;
             textLocation(2) = (colIndex - 1) * obj.data.spatial_size + obj.displayOffsite;
         end
+        
+        function featureIndex = featureIndexOnThisFrame(obj, t)
+            if t == obj.data.nFrame, t = obj.data.nFrame - 1; end
+            slideIndex = floor(t/obj.data.temporal_size);
+            featureIndex = slideIndex * obj.numFeaturePerFrame + 1 : ...
+                (slideIndex + 1) * obj.numFeaturePerFrame;
+        end
     end
-    
 end
 
