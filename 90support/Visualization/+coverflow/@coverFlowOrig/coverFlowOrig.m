@@ -8,7 +8,7 @@ classdef coverFlowOrig
             'Cover Flow:Skin Detection'), 'cflowproperties', struct('EdgeColor', ...
             'none', 'FaceColor', 'texturemap', 'LineStyle', 'none'), ...
             'stackSize', 5);
-        framesRange = [1  10];
+        framesRange = (1:  10);
         frames = 1 : 5;
         figHandel;
     end

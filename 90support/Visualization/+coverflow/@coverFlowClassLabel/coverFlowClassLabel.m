@@ -38,20 +38,35 @@ classdef coverFlowClassLabel < coverflow.coverFlowOrig
     end
     
     methods     % Ability Functions
-        function [w h] = playConsecutiveCoverFlow(obj)
-            obj.framesRange = 1 : 10;
-            obj.figHandel = figure();
-            % frameRange is the showing frames indicator.
-            for i = obj.framesRange(1) : obj.framesRange(end - obj.param.stackSize + 1)
-                obj = obj.setFrames(obj.framesRange(i) : obj.framesRange(i + obj.param.stackSize -1));
-                if isobject(obj.data)
-                    [w h] = obj.coverFlowCore(obj.data.Data);
-                else
-                    [w h] = obj.coverFlowCore(obj.data);
-                end
-                pause(1/11);
-                obj.engraveText(w);
+        function playConsecutiveWholeVideoCoverFlow(obj)
+            % only read the data, but don't return the obj 
+            % Because this class is not handle but value, therefore, it
+            % should not have efforts on the other functions or interfaces
+            if exist(obj.savedVideoName, 'file')
+                tmpVisualizedVar = movie2var(obj.savedVideoName, 0, 1);
+            else
+                obj.saveVisualizedAsVideo();
             end
+            tmpMovieObj = video.videoVar(tmpVisualizedVar);
+            tmpCoverFlowObj = coverflow.coverFlowOrig(tmpMovieObj);
+            tmpCoverFlowObj = tmpCoverFlowObj.setFrameRangeAll();
+            tmpCoverFlowObj.playConsecutiveCoverFlow();
+            
+            
+            
+%             obj.framesRange = 1 : 10;
+%             obj.figHandel = figure();
+%             % frameRange is the showing frames indicator.
+%             for i = obj.framesRange(1) : obj.framesRange(end - obj.param.stackSize + 1)
+%                 obj = obj.setFrames(obj.framesRange(i) : obj.framesRange(i + obj.param.stackSize -1));
+%                 if isobject(obj.data)
+%                     [w h] = obj.coverFlowCore(obj.data.Data);
+%                 else
+%                     [w h] = obj.coverFlowCore(obj.data);
+%                 end
+%                 pause(1/11);
+%                 obj.engraveText(w);
+%             end
         end
     end
     
