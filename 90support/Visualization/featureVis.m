@@ -19,12 +19,14 @@ for i = 1 : nFiles
     tmpMovieVar = movie2var(tmpMovieName, 0, 1);
     tmpMovieObj = video.croppedVideoVar(tmpMovieVar, fovea);
     tmpMovieObj = tmpMovieObj.cropVideoForFeatureDetection();
-    
+    tmpClassLabel = train_label_all{1}{1}(train_indices{i}.start : train_indices{i}.end);
 %     [textLocationBatch featureRegular] = calculateFeatureLocations(tmpMovieObj, ...
 %         train_label_all(train_indices{i}.start : train_indices{i}.end));
     
-    coverFlowObj = coverflow.coverFlowOrig(tmpMovieObj);
-    coverFlowObj = coverFlowObj.setFrameRangeAll;
+%     coverFlowObj = coverflow.coverFlowOrig(tmpMovieObj);
+%     coverFlowObj = coverFlowObj.setFrameRangeAll;
+%     coverFlowObj.playConsecutiveCoverFlow;
+    coverFlowObj = coverflow.coverFlowClassLabel(tmpMovieObj, tmpClassLabel);
     coverFlowObj.playConsecutiveCoverFlow;
     clear coverFlowObj
 %     coverFlowObj1.
