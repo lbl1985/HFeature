@@ -50,6 +50,22 @@ classdef coverFlowClassLabel < coverflow.coverFlowOrig
             tmpCoverFlowObj.framesRange = keyFrames;
             tmpCoverFlowObj.playConsecutiveCoverFlow();
         end
+        
+        function saveKeyFramesAsFig(obj)
+            tmpCoverFlowObj = obj.coverFlowPrepare();
+            obj.figHandel = figure();
+            keyFrames = obj.getKeyFrames();
+            for i = 1 : length(keyFrames) - tmpCoverFlowObj.param.stackSize + 1
+                tmpCoverFlowObj = tmpCoverFlowObj.setFrames(keyFrames(i : ...
+                    i + tmpCoverFlowObj.param.stackSize - 1));
+                if isobject(tmpCoverFlowObj.data)
+                    [w h] = tmpCoverFlowObj.coverFlowCore(tmpCoverFlowObj.data.Data);
+                else
+                    [w h] = tmpCoverFlowObj.coverFlowCore(tmpCoverFlowObj.data);
+                end
+                figure(w); 
+            end
+        end
     end
     
     methods     % Figure based class label. The saved generated images
@@ -64,7 +80,7 @@ classdef coverFlowClassLabel < coverflow.coverFlowOrig
             s1 = video.videoSaver(obj.savedVideoName, 11);            
             for t = 1 : obj.data.nFrame
                 obj = obj.visualizationOnImageCore1(t);
-                
+                title(['Frame ' num2str(t)]);
                 s1.fig = obj.figHandel;
                 s1.saveCore();
             end
