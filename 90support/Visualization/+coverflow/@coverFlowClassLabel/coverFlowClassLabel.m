@@ -14,6 +14,7 @@ classdef coverFlowClassLabel < coverflow.coverFlowOrig
         colorBoard = uint8(round(varycolor(3000) * 255));
         displayOffsite = 5;
         
+        savedResultFolder = fullfile(getProjectBaseFolder, 'Results', 'tmpResult');
         savedVideoName = fullfile(getProjectBaseFolder, 'Results', 'coverFlowClassLabelTmpVideo.avi');
     end
     
@@ -38,12 +39,14 @@ classdef coverFlowClassLabel < coverflow.coverFlowOrig
     
     methods     % Ability Functions
         function playConsecutiveWholeVideoCoverFlow(obj)
+            obj = obj.renewSavedVideoName();
             tmpCoverFlowObj = obj.coverFlowPrepare();
             tmpCoverFlowObj = tmpCoverFlowObj.setFrameRangeAll();
             tmpCoverFlowObj.playConsecutiveCoverFlow();
         end
         
         function playKeyFramesCoverFlow(obj)
+            obj = obj.renewSavedVideoName();
             tmpCoverFlowObj = obj.coverFlowPrepare();
             keyFrames = obj.getKeyFrames();
             tmpCoverFlowObj.framesRange = keyFrames;
@@ -51,9 +54,10 @@ classdef coverFlowClassLabel < coverflow.coverFlowOrig
         end
         
         function saveKeyFramesAsFig(obj)
+            obj = obj.renewSavedVideoName();
             tmpCoverFlowObj = obj.coverFlowPrepare();
             tmpCoverFlowObj.figHandel = figure();
-            keyFrames = obj.getKeyFrames();
+            keyFrames = obj.getKeyFrames();            
             for i = 1 : length(keyFrames) - tmpCoverFlowObj.param.stackSize + 1
                 tmpCoverFlowObj = tmpCoverFlowObj.setFrames(keyFrames(i : ...
                     i + tmpCoverFlowObj.param.stackSize - 1));
@@ -62,7 +66,7 @@ classdef coverFlowClassLabel < coverflow.coverFlowOrig
                 else
                     tmpCoverFlowObj.coverFlowCore(tmpCoverFlowObj.data);
                 end
-                saveas(gcf, fullfile(getProjectBaseFolder, 'Results', ['keyFramesFrom_' ...
+                saveas(gcf, fullfile(obj.savedResultFolder, [obj.data.videoName 'keyFramesFrom_' ...
                     num2str(keyFrames(i)) '.fig']));
             end
         end
@@ -77,6 +81,7 @@ classdef coverFlowClassLabel < coverflow.coverFlowOrig
         end
         
         function saveVisualizedAsVideo(obj)
+            obj = obj.renewSavedVideoName();
             s1 = video.videoSaver(obj.savedVideoName, 11);            
             for t = 1 : obj.data.nFrame
                 obj = obj.visualizationOnImageCore1(t);
@@ -121,12 +126,31 @@ classdef coverFlowClassLabel < coverflow.coverFlowOrig
             % only read the data, but don't return the obj 
             % Because this class is not handle but value, therefore, it
             % should not have efforts on the other functions or interfaces
+            obj = obj.renewSavedVideoName();
             if ~exist(obj.savedVideoName, 'file')
                 obj.saveVisualizedAsVideo();
             end
             tmpVisualizedVar = movie2var(obj.savedVideoName, 0, 1);
             tmpMovieObj = video.videoVar(tmpVisualizedVar);
             tmpCoverFlowObj = coverflow.coverFlowOrig(tmpMovieObj);
+        end
+        
+        function obj = renewSavedVideoName(obj)
+            if ~isempty(obj.data.videoName)
+                obj = obj.renewSavedResultFolder();
+                obj.savedVideoName = fullfile(obj.savedResultFolder, ...
+                    [obj.data.videoName '_coverFlowClassLabelVideo.avi']);
+            end            
+        end
+        
+        function obj = renewSavedResultFolder(obj)
+            if ~isempty(obj.data.videoName)
+                obj.savedResultFolder = fullfile(getProjectBaseFolder, ...
+                    'Results', obj.data.videoName);
+                if ~exist(obj.savedResultFolder, 'dir')
+                    mkdir(obj.savedResultFolder);
+                end
+            end
         end
         
         function image = transactColor(obj, image, featureIndex)
