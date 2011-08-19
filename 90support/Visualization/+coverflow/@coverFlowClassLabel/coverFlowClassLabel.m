@@ -57,7 +57,11 @@ classdef coverFlowClassLabel < coverflow.coverFlowOrig
             obj = obj.renewSavedVideoName();
             tmpCoverFlowObj = obj.coverFlowPrepare();
             tmpCoverFlowObj.figHandel = figure();
-            keyFrames = obj.getKeyFrames();            
+            keyFrames = obj.getKeyFrames();  
+            if length(keyFrames) < tmpCoverFlowObj.param.stackSize
+                tmpCoverFlowObj.param.stackSize = length(keyFrames);
+            end
+            
             for i = 1 : length(keyFrames) - tmpCoverFlowObj.param.stackSize + 1
                 tmpCoverFlowObj = tmpCoverFlowObj.setFrames(keyFrames(i : ...
                     i + tmpCoverFlowObj.param.stackSize - 1));
