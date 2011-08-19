@@ -53,17 +53,18 @@ classdef coverFlowClassLabel < coverflow.coverFlowOrig
         
         function saveKeyFramesAsFig(obj)
             tmpCoverFlowObj = obj.coverFlowPrepare();
-            obj.figHandel = figure();
+            tmpCoverFlowObj.figHandel = figure();
             keyFrames = obj.getKeyFrames();
             for i = 1 : length(keyFrames) - tmpCoverFlowObj.param.stackSize + 1
                 tmpCoverFlowObj = tmpCoverFlowObj.setFrames(keyFrames(i : ...
                     i + tmpCoverFlowObj.param.stackSize - 1));
                 if isobject(tmpCoverFlowObj.data)
-                    [w h] = tmpCoverFlowObj.coverFlowCore(tmpCoverFlowObj.data.Data);
+                    tmpCoverFlowObj.coverFlowCore(tmpCoverFlowObj.data.Data);
                 else
-                    [w h] = tmpCoverFlowObj.coverFlowCore(tmpCoverFlowObj.data);
+                    tmpCoverFlowObj.coverFlowCore(tmpCoverFlowObj.data);
                 end
-                figure(w); 
+                saveas(gcf, fullfile(getProjectBaseFolder, 'Results', ['keyFramesFrom_' ...
+                    num2str(keyFrames(i)) '.fig']));
             end
         end
     end
@@ -95,10 +96,10 @@ classdef coverFlowClassLabel < coverflow.coverFlowOrig
             
             if obj.data.ndim == 4
                 img = obj.transactColor(obj.data.Data(:, :, :, t), featureIndex);
-                imshow(img, 'border', 'tight');
+                imshow(img);
             else
                 img = obj.transactColor(obj.data.Data(:, :, t), featureIndex);
-                imshow(img, 'border', 'tight');
+                imshow(img);
             end
             
             for j = featureIndex(1) : featureIndex(end)
@@ -111,6 +112,7 @@ classdef coverFlowClassLabel < coverflow.coverFlowOrig
                     dispMEstack(ME.stack);
                 end
             end
+            title(['Frame ' num2str(t)]);
             pause(1/11);
         end
     end
