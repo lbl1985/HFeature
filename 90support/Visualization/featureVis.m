@@ -11,7 +11,7 @@ params.avipath = fullfile(baseFolder, 'AVIClips05/');
 all_train_files = all_train_files(1 : length(train_indices)); 
 
 nFiles = length(all_train_files);
-for i = 2 : nFiles
+for i = 1 : nFiles
     tmpMovieName = fullfile(params.avipath, [all_train_files{i} '.avi']);
     if ~exist(tmpMovieName, 'file')
         error('the file %s is not available', tmpMovieName);
