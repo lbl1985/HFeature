@@ -16,6 +16,11 @@ classdef videoVar
         nFrame
     end
     
+    properties (SetAccess = public)
+        videoName = [];
+        videoOrigFolder =[];
+    end
+    
     methods
         function obj = videoVar(inputData)
             if nargin > 0

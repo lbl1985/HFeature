@@ -33,7 +33,6 @@ classdef coverFlowClassLabel < coverflow.coverFlowOrig
             assert(obj.nFeature == length(obj.classLabels), ...
                 'nFeature Calculated is not equal to Experimental Results');
             
-            
         end        
     end
     

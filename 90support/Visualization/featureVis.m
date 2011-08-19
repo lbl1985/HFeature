@@ -17,19 +17,17 @@ for i = 1 : nFiles
         error('the file %s is not available', tmpMovieName);
     end
     tmpMovieVar = movie2var(tmpMovieName, 0, 1);
+    
     tmpMovieObj = video.croppedVideoVar(tmpMovieVar, fovea);
+    tmpMovieObj.videoName = all_train_files{i};
+    tmpMovieObj.videoOrigFolder = params.avipath;
+    
     tmpMovieObj = tmpMovieObj.cropVideoForFeatureDetection();
     tmpClassLabel = train_label_all{1}{1}(train_indices{i}.start : train_indices{i}.end);
-%     [textLocationBatch featureRegular] = calculateFeatureLocations(tmpMovieObj, ...
-%         train_label_all(train_indices{i}.start : train_indices{i}.end));
-    
-%     coverFlowObj = coverflow.coverFlowOrig(tmpMovieObj);
-%     coverFlowObj = coverFlowObj.setFrameRangeAll;
-%     coverFlowObj.playConsecutiveCoverFlow;
+
     coverFlowObj = coverflow.coverFlowClassLabel(tmpMovieObj, tmpClassLabel);
     coverFlowObj.visualizeOnImage;
-%     coverFlowObj.playConsecutiveCoverFlow;
+    
     clear coverFlowObj
-%     coverFlowObj1.
+
 end
-% end
