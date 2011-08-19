@@ -104,11 +104,10 @@ classdef coverFlowClassLabel < coverflow.coverFlowOrig
             % only read the data, but don't return the obj 
             % Because this class is not handle but value, therefore, it
             % should not have efforts on the other functions or interfaces
-            if exist(obj.savedVideoName, 'file')
-                tmpVisualizedVar = movie2var(obj.savedVideoName, 0, 1);
-            else
+            if ~exist(obj.savedVideoName, 'file')
                 obj.saveVisualizedAsVideo();
             end
+            tmpVisualizedVar = movie2var(obj.savedVideoName, 0, 1);
             tmpMovieObj = video.videoVar(tmpVisualizedVar);
             tmpCoverFlowObj = coverflow.coverFlowOrig(tmpMovieObj);
         end
