@@ -1,7 +1,9 @@
 if ismac
     workingpath = '/Users/herbert19lee/Documents/MATLAB/work/HFeature';
-elseif ispc
+elseif ispc    
     workingpath = 'C:\Users\lbl1985\Documents\MATLAB\work\HFeature';
+elseif isunix
+    workingpath = '/home/binlongli/Documents/MATLAB/work/HFeature';
 end  
 
 cd(workingpath);
