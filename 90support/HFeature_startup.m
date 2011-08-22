@@ -4,6 +4,9 @@ elseif ispc
     workingpath = 'C:\Users\lbl1985\Documents\MATLAB\work\HFeature';
 elseif isunix
     workingpath = '/home/binlongli/Documents/MATLAB/work/HFeature';
+    if ~exist(workingpath, 'dir')
+        workingpath = '/home/binlong/Documents/MATLAB/work/HFeature';
+    end
 end  
 
 cd(workingpath);
