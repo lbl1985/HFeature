@@ -150,7 +150,7 @@ classdef coverFlowClassLabel < coverflow.coverFlowOrig
         function obj = renewSavedResultFolder(obj)
             if ~isempty(obj.data.videoName)
                 obj.savedResultFolder = fullfile(getProjectBaseFolder, ...
-                    'Results', obj.data.videoName);
+                    'Results', 'feaVis', obj.data.videoName);
                 if ~exist(obj.savedResultFolder, 'dir')
                     mkdir(obj.savedResultFolder);
                 end

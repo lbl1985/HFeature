@@ -31,5 +31,6 @@ for i = 1 : nFiles
 
     
     clear coverFlowObj
+    close all;
 
 end
