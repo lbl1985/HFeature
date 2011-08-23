@@ -1,0 +1,2 @@
+function blockHankelConstruction(featureMatrix, fovea)
+
