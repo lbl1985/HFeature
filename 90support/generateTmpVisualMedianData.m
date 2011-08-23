@@ -1,4 +1,4 @@
-function generateTmpVisualMedianData(idx)
+function generateTmpVisualMedianData(idx, varargin)
 % This function is designed for prepare for the visualization purpose.
 % Save the information sections corresponding to the specific required
 % videos.
@@ -18,5 +18,17 @@ train_indices_backup = train_indices;
 train_indices = train_indices{1}(idx);
 save(fullfile(baseFolder, 'Results', 'tmpVisualMedianData', 'train_indices.mat'), 'train_indices');
 
-save(fullfile(baseFolder, 'Results', 'tmpVisualMedianData', 'train_label_all.mat'), 'train_label_all');
+save(fullfile(baseFolder, 'Results', 'tmpVisualMedianData', 'train_label_all.mat'), 'train_label_all');   
 
+if nargin == 2
+    isRaw = varargin{1};
+end
+
+
+if exist(isRaw, 'var')
+    load(fullfile(baseFolder, 'Results', 'VisualMedianData', 'trainKmeans.mat'));
+    lastLineNum = train_indices{end}.end;
+    Xtrain_raw = {Xtrain_raw{1}(1 : lastLineNum)};
+    save(fullfile(baseFolder, 'Result', 'tmpVisualMedianData', 'Xtrain_raw.mat'), 'Xtrain_raw');
+end
+    
