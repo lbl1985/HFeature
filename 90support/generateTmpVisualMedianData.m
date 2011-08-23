@@ -25,10 +25,10 @@ if nargin == 2
 end
 
 
-if exist(isRaw, 'var')
+if exist('isRaw', 'var')
     load(fullfile(baseFolder, 'Results', 'VisualMedianData', 'trainKmeans.mat'));
     lastLineNum = train_indices{end}.end;
     Xtrain_raw = {Xtrain_raw{1}(1 : lastLineNum, :)};
-    save(fullfile(baseFolder, 'Result', 'tmpVisualMedianData', 'Xtrain_raw.mat'), 'Xtrain_raw');
+    save(fullfile(baseFolder, 'Results', 'tmpVisualMedianData', 'Xtrain_raw.mat'), 'Xtrain_raw');
 end
     
