@@ -1,4 +1,4 @@
-function blockHankelConstruction(hankelWindowSize, featureMatrix, featureIndexObj)
+function HankelVideo = blockHankelConstruction(hankelWindowSize, featureMatrix, featureIndexObj)
 % Since the default featureMatrix is row orientated, each row is a feature
 featureMatrix = featureMatrix';
 assert(isequal(size(featureMatrix, 2), featureIndexObj.nFeature), ...

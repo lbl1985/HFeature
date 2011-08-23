@@ -1,3 +1,4 @@
+clear
 baseFolder = getProjectBaseFolder();
 load(fullfile(baseFolder, 'Results', 'tmpVisualMedianData', 'all_train_files.mat'));
 load(fullfile(baseFolder, 'Results', 'tmpVisualMedianData', 'train_indices.mat'));
@@ -11,8 +12,11 @@ fovea.temporal_size = isanetwork{1}.temporal_size;
 params.avipath = fullfile(baseFolder, 'AVIClips05/');
 all_train_files = all_train_files(1 : length(train_indices)); 
 
+hankelWindowSize = 4;
+blockHankelBatch = [];
+
 nFiles = length(all_train_files);
-for i = 1 : 1
+for i = 1 : nFiles
     tmpMovieName = fullfile(params.avipath, [all_train_files{i} '.avi']);
     if ~exist(tmpMovieName, 'file')
         error('the file %s is not available', tmpMovieName);
@@ -24,4 +28,10 @@ for i = 1 : 1
     
     featureIndexObj = featureIndex(tmpMovieSizeObj);
     tmpFeatureMatrix = Xtrain_raw{1}(train_indices{i}.start : train_indices{i}.end, :);
+    tmpHankelVideo = blockSubspace.blockHankelConstruction(hankelWindowSize, ...
+        tmpFeatureMatrix, featureIndexObj);
+    blockHankelBatch = cat(1, blockHankelBatch, tmpHankelVideo);
+    train_indices{i}.blockHankelIndex.start = length(blockHankelBatch) + 1; %#ok<*SAGROW>
+    train_indices{i}.blockHankelIndex.end   = length(blockHankelBatch) + featureIndexObj.numFeaturePerFrame;
+    writenum(i);
 end
