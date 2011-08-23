@@ -56,6 +56,7 @@ classdef croppedVideoVar < video.videoVar
                 obj.siz = [obj.siz(1) obj.siz(2) 3 obj.siz(3)];
             end
             obj.Data = [];
+            obj.nFrame = obj.siz(end);
         end
     end
     
