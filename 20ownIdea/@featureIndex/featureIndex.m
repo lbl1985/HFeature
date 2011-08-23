@@ -3,8 +3,8 @@ classdef featureIndex
     %   Detailed explanation goes here
     
     properties
-        croppedVideoObj
-        featureMatrix
+        videoSize
+%         featureMatrix
         
         
         numFeaturePerRow
@@ -15,16 +15,15 @@ classdef featureIndex
     end
     
     methods
-        function obj = featureIndex(inputCroppedVideoObj, inputFeatureMatrix)
-            assert(isobject(inputCroppedVideoObj), '1st input should be croppedVideoObject');
+        function obj = featureIndex(inputVideoSize)
+            assert(isobject(inputVideoSize), '1st input should be croppedVideoObject');
             
-            obj.croppedVideoObj = inputCroppedVideoObj;
-            obj.featureMatrix = inputFeatureMatrix;
+            obj.videoSize = inputCroppedVideoObj;
             
-            obj.numFeaturePerRow = inputCroppedVideoObj.siz(1) / inputCroppedVideoObj.spatial_size;
-            obj.numFeaturePerCol = inputCroppedVideoObj.siz(2) / inputCroppedVideoObj.spatial_size;
-            obj.numFeaturePerFrame = inputCroppedVideoObj.siz(1) * inputCroppedVideoObj.siz(2) / (inputCroppedVideoObj.spatial_size^2);
-            obj.numOfSlides = inputCroppedVideoObj.siz(end) / inputCroppedVideoObj.temporal_size;
+            obj.numFeaturePerRow = inputVideoSize.siz(1) / inputVideoSize.spatial_size;
+            obj.numFeaturePerCol = inputVideoSize.siz(2) / inputVideoSize.spatial_size;
+            obj.numFeaturePerFrame = inputVideoSize.siz(1) * inputVideoSize.siz(2) / (inputVideoSize.spatial_size^2);
+            obj.numOfSlides = inputVideoSize.siz(end) / inputVideoSize.temporal_size;
             obj.nFeature = obj.numFeaturePerFrame * obj.numOfSlides;
         end        
     end
