@@ -22,5 +22,6 @@ for i = 1 : 1
     tmpMovieObj = video.croppedVideoVar(tmpMovieVar, fovea);
     tmpMovieSizeObj = tmpMovieObj.calculateSizeOfFeatureDetection();
     
+    featureIndexObj = featureIndex(tmpMovieSizeObj);
     tmpFeatureMatrix = Xtrain_raw{1}(train_indices{i}.start : train_indices{i}.end, :);
 end

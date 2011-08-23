@@ -18,7 +18,7 @@ classdef featureIndex
         function obj = featureIndex(inputVideoSize)
             assert(isobject(inputVideoSize), '1st input should be croppedVideoObject');
             
-            obj.videoSize = inputCroppedVideoObj;
+            obj.videoSize = inputVideoSize;
             
             obj.numFeaturePerRow = inputVideoSize.siz(1) / inputVideoSize.spatial_size;
             obj.numFeaturePerCol = inputVideoSize.siz(2) / inputVideoSize.spatial_size;
