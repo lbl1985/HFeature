@@ -13,7 +13,9 @@ params.avipath = fullfile(baseFolder, 'AVIClips05/');
 all_train_files = all_train_files(1 : length(train_indices)); 
 
 hankelWindowSize = 4;
+nSubspaces = 1;
 blockHankelBatch = [];
+blockSubspacesBatch = [];
 
 nFiles = length(all_train_files);
 for i = 1 : nFiles
@@ -28,9 +30,14 @@ for i = 1 : nFiles
     
     featureIndexObj = featureIndex(tmpMovieSizeObj);
     tmpFeatureMatrix = Xtrain_raw{1}(train_indices{i}.start : train_indices{i}.end, :);
+    
     tmpHankelVideo = blockSubspace.blockHankelConstruction(hankelWindowSize, ...
         tmpFeatureMatrix, featureIndexObj);
+    tmpSubspacesVideo = blockSubspace.blockSubspacesCal(tmpHankelVideo, nSubspaces);
+    
     blockHankelBatch = cat(1, blockHankelBatch, tmpHankelVideo);
+    blockSubspacesBatch = cat(1, blockSubspacesBatch, tmpSubspacesVideo);
+    
     train_indices{i}.blockHankelIndex.start = length(blockHankelBatch) + 1; %#ok<*SAGROW>
     train_indices{i}.blockHankelIndex.end   = length(blockHankelBatch) + featureIndexObj.numFeaturePerFrame;
     writenum(i);
