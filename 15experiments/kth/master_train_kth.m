@@ -10,6 +10,7 @@ addpath(path);
 bases_path = [path, '/bases/']; %store trained filters/bases
 
 unsup_train_data_path = [path, '/unsup_data/']; %a few Gb
+checkFolder(base_path);    checkFolder(unsup_train_data_path);
 
 %% parameters
 load_layers = 0; % option to load pre-trained bases in the network
