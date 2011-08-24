@@ -37,8 +37,8 @@ for i = 1 : nFiles
     if (~isempty(tmpHankelVideo{1}))
         tmpSubspacesVideo = blockSubspace.blockSubspacesCal(tmpHankelVideo, nSubspaces, subspaceDimension);
 
-        train_indices{i}.blockHankelIndex.start = size(tmpSubspacesVideo, 2) + 1; %#ok<*SAGROW>
-        train_indices{i}.blockHankelIndex.end   = size(tmpSubspacesVideo, 2) + featureIndexObj.numFeaturePerFrame;
+        train_indices{i}.blockHankelIndex.start = size(blockSubspacesBatch, 2) + 1; %#ok<*SAGROW>
+        train_indices{i}.blockHankelIndex.end   = size(blockSubspacesBatch, 2) + featureIndexObj.numFeaturePerFrame;
 
         blockHankelBatch = cat(1, blockHankelBatch, tmpHankelVideo);
         blockSubspacesBatch = cat(2, blockSubspacesBatch, tmpSubspacesVideo);
