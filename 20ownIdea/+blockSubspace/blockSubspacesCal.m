@@ -1,11 +1,13 @@
-function tmpSubspacesVideo = blockSubspacesCal(tmpHankelVideo, nSubspaces)
+function tmpSubspacesVideo = blockSubspacesCal(tmpHankelVideo, nSubspaces, subspaceDimension)
+nBlocks = length(tmpHankelVideo);
+
 if isempty(tmpHankelVideo{1})
-    tmpSubspacesVideo = tmpHankelVideo;
+    tmpSubspacesVideo = zeros(subspaceDimension, nBlocks * nSubspaces);
 else
-    nBlocks = length(tmpHankelVideo);
-    tmpSubspacesVideo = cell(nBlocks, 1);
+    tmpSubspacesVideo = zeros(subspaceDimension, nBlocks * nSubspaces);
     for i = 1 : nBlocks
         [U, ~, ~] = svd(tmpHankelVideo{i});
-        tmpSubspacesVideo{i} = U(:, 1 : nSubspaces);
+        index = (i - 1) * nSubspaces + 1 : i * nSubspaces;
+        tmpSubspacesVideo(:, index) = U(:, 1 : nSubspaces);
     end
 end

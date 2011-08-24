@@ -3,5 +3,4 @@ if ispc
     !del *.asv
 else
     !rm *.*~
-    !rm *.asv
 end

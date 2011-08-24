@@ -14,6 +14,7 @@ all_train_files = all_train_files(1 : length(train_indices));
 
 hankelWindowSize = 4;
 nSubspaces = 1;
+subspaceDimension =  size(isanetwork{1}.W, 1) * hankelWindowSize;
 blockHankelBatch = [];
 blockSubspacesBatch = [];
 
@@ -33,13 +34,13 @@ for i = 1 : nFiles
     
     tmpHankelVideo = blockSubspace.blockHankelConstruction(hankelWindowSize, ...
         tmpFeatureMatrix, featureIndexObj);
-    tmpSubspacesVideo = blockSubspace.blockSubspacesCal(tmpHankelVideo, nSubspaces);
+    tmpSubspacesVideo = blockSubspace.blockSubspacesCal(tmpHankelVideo, nSubspaces, subspaceDimension);
     
     train_indices{i}.blockHankelIndex.start = length(blockHankelBatch) + 1; %#ok<*SAGROW>
     train_indices{i}.blockHankelIndex.end   = length(blockHankelBatch) + featureIndexObj.numFeaturePerFrame;
     
     blockHankelBatch = cat(1, blockHankelBatch, tmpHankelVideo);
-    blockSubspacesBatch = cat(1, blockSubspacesBatch, tmpSubspacesVideo);
+    blockSubspacesBatch = cat(2, blockSubspacesBatch, tmpSubspacesVideo);
     
     writenum(i);
 end
