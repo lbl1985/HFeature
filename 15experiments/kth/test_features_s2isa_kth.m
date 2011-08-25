@@ -52,7 +52,7 @@ clear Xtest_raw
 save_stackisa(params, center_all, km_obj, train_label_all, test_label_all, MM_train, MM_test, ...
         train_indices,test_indices,all_train_files,all_test_files,all_train_labels,all_test_labels);
 try 
-    rerun_ap;
+    rerun_ap_kth;
 catch ME
     send_mail_message('herbert19lee', 'rerun_ap is broken', ME.message);
 end
