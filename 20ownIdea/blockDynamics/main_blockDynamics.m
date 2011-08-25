@@ -1,3 +1,4 @@
+clear
 baseFolder = getProjectBaseFolder();
 load(fullfile(baseFolder, 'Results', 'VisualMedianData', 'all_train_files.mat'));
 load(fullfile(baseFolder, 'Results', 'VisualMedianData', 'save_train_indices.mat'));
