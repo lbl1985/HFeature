@@ -1,6 +1,6 @@
-function N = transact_dense_samp_raw(M, network, params)
+function N = transact_dense_samp_raw(M, fovea, params)
 
-fovea = network.isa{params.feature.num_layers}.fovea;
+% fovea = network.isa{params.feature.num_layers}.fovea;
 
 ds_st_per_cf_x = params.testds_sp_strides_per_cfovea_x;
 ds_st_per_cf_y = params.testds_sp_strides_per_cfovea_y;
