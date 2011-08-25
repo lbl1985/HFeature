@@ -31,6 +31,8 @@ fprintf('feature size: %d\n', size(Xtrain_raw{1}, 2));
 %%---------------KMEANS: over all scales raw features ---------------
 fprintf('Start vector quantization on training samples:\n');
 [train_label_all, center_all, km_obj] = kmeans_stackisa(Xtrain_raw, params);    
+save(fullfile(params.visMedianVarSavingFolder, 'visTrainMedianData_all'));
+send_mail_message('herbert19lee', 'HFeature kth_Training is Done', datestr(now));
 clear Xtrain_raw
 
 %%--------------TEST: compute raw features ---------------
@@ -42,7 +44,8 @@ fprintf('assigning all labels to test data......\n')
 for j = 1:params.num_km_init
     test_label_all{j}{1} = find_labels_dnc(center_all{j}, Xtest_raw{1});
 end
-
+save(fullfile(params.visMedianVarSavingFolder, 'visTestMedianData_all'));
+send_mail_message('herbert19lee', 'HFeature kth_Testing is Done', datestr(now));
 clear Xtest_raw
 
 %%-------------SAVE ------------

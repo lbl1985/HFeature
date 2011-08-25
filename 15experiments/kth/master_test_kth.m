@@ -51,6 +51,8 @@ params.avipath{1} = fullfile(params.afspath, '15experiments', 'kth', 'kth_select
 %path to clipsets (label info)
 % params.infopath = [params.afspath, 'ClipSets/']; %path for video labels/info
 params.infopath = [ ];
+params.visMedianVarSavingFolder = fullfile(params.afspath, 'Results', 'kth', 'VisualMedianData');
+checkFolder(params.visMedianVarSavingFolder);
 
 %number of supervised train & test movies (for controlled testing)
 params.num_movies = 1000; %anything >900 = train/test all movies
