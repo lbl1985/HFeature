@@ -12,15 +12,14 @@ switch datasetName
     case 'kth'
 end
 
-fovea.spatial_size = isanetwork{1}.spatial_size; 
-fovea.temporal_size = isanetwork{1}.temporal_size;
+fovea = getFovea(isanetwork);
 
-featureOrderFileIndex = featureIndex2FileIndex(train_indices{1});
+% featureOrderFileIndex = featureIndex2FileIndex(train_indices{1});
 numWord = max(train_label_all{1}{1});
 
 for wordId = 25
     index = find(train_label_all{1}{1} == wordId);
-    featureIndexForVideo = getFeatureIndexForVideo(index, train_label_all{1});
+    featureIndexForVideo = getFeatureIndexForVideo(index, train_indices{1});
     videoPatchAll = [];
     while i ~= size(featureIndexForVideo, 1)
 %     for i = 1 : size(featureIndexForVideo, 1)
