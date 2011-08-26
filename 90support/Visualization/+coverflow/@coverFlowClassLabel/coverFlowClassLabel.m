@@ -11,7 +11,7 @@ classdef coverFlowClassLabel < coverflow.coverFlowOrig
         numOfSlides;
         nFeature;
         
-        colorBoard = uint8(round(varycolor(3000) * 255));
+        colorBoard = uint8(round(varycolor(50) * 255));
         displayOffsite = 5;
         
         savedResultFolder = fullfile(getProjectBaseFolder, 'Results', 'tmpResult');
@@ -106,7 +106,7 @@ classdef coverFlowClassLabel < coverflow.coverFlowOrig
                 img = obj.transactColor(obj.data.Data(:, :, :, t), featureIndex);
                 imshow(img);
             else
-                img = obj.transactColor(obj.data.Data(:, :, t), featureIndex);
+                img = obj.transactColor(repmat(obj.data.Data(:, :, t), [ 1 1 3]), featureIndex);
                 imshow(img);
             end
             
