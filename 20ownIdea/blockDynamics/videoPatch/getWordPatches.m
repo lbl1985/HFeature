@@ -9,6 +9,9 @@ while i <= size(featureIndexForVideo, 1)
     sameTypeIndexInSameVideo = find(featureIndexForVideo(:, 1) == videoIndex);
     for j = 1 : length(sameTypeIndexInSameVideo)
         writenum(sameTypeIndexInSameVideo(j));
+        if mod(sameTypeIndexInSameVideo(j), 20) == 0
+            fprintf('\n');
+        end
         colIndex = featureIndexForVideo(sameTypeIndexInSameVideo(j), 2);
         videoPatch = reshape(videoSample(:, colIndex), [fovea.spatial_size ...
             fovea.spatial_size fovea.temporal_size]);
