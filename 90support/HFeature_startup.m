@@ -18,6 +18,7 @@ elseif isunix
     rmpath(fullfile(workingpath, '10digging', 'mmread_mac'));
 end
 
+addpath(genpath(fullfile(workingpath, '15experiments')));
 addpath(genpath(fullfile(workingpath, '20ownIdea')));
 addpath(genpath(fullfile(workingpath, '90support')));
 addpath(genpath(fullfile(workingpath, 'Results')));
