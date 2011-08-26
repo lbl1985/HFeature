@@ -9,6 +9,7 @@ switch datasetName
         load(fullfile(baseFolder, 'Results', 'VisualMedianData', 'train_label_all.mat'));
         load(fullfile(baseFolder, 'Results', 'VisualMedianData', 'trainKmeans_excpt_Xtrain_raw.mat'));
         load(fullfile(baseFolder, '10digging', 'bases', 'isa2layer_16t20_ts10t14_nf200_gs2_st4t4_l1_isa1layer_16_10_300_1'));
+        dataFolder = fullfile(baseFolder, 'AVIClips05/');
     case 'kth'
 end
 
@@ -23,7 +24,7 @@ for wordId = 25
     videoPatchAll = [];
     while i ~= size(featureIndexForVideo, 1)
 %     for i = 1 : size(featureIndexForVideo, 1)
-        M = loadingData(datasetName, folder, all_train_files{i});
+        M = loadingData(datasetName, dataFolder, all_train_files{i}, fovea);
         videoSample = transact_dense_samp_raw(M, fovea, params);
         sameTypeIndexInSameVideo = find(featureIndexForVideo(:, 1) == featureIndexForVideo(i));
         for j = 1 : length(sameTypeIndexInSameVideo)
