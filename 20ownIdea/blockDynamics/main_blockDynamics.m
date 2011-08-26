@@ -11,6 +11,9 @@ switch datasetName
         load(fullfile(baseFolder, '10digging', 'bases', 'isa2layer_16t20_ts10t14_nf200_gs2_st4t4_l1_isa1layer_16_10_300_1'));
         dataFolder = fullfile(baseFolder, 'AVIClips05/');
     case 'kth'
+        load(fullfile(baseFolder, 'Results', 'kth', 'VisualMedianData', 'visTrainMedianData_all.mat'));
+        load(fullfile(baseFolder, '15experiments', 'kth', 'bases', 'isa2layer_16t20_ts10t14_nf200_gs2_st4t4_l1_isa1layer_16_10_300_1'));
+        dataFolder = fullfile(baseFolder, '15experiments', 'kth', 'kth_selectFrames/');
 end
 
 fovea = getFovea(isanetwork);
