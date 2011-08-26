@@ -1,6 +1,7 @@
 clear
 baseFolder = getProjectBaseFolder();
-datasetName = 'hw2';
+% datasetName = 'hw2';
+datasetName = 'kth';
 switch datasetName
     case 'hw2'
         % This is using HW2 training data
