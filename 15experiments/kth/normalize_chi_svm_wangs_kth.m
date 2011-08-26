@@ -11,6 +11,7 @@ function [mean_ap, mean_acc] = normalize_chi_svm_wangs_kth(Xtrain, Xtest, norm_t
 % addpath /afs/cs/u/wzou/mf/chi/pwmetric/
 
 %% sort filenames and labels
+unscramble = 0;
 if(unscramble)
     fprintf('unscrambling data.....\n');
     [sorted_train_files, sort_train_idx]=sort(all_train_files);
@@ -77,21 +78,23 @@ end
 %% load labels, run svm
 
 % actions = textread([infopath, 'classes.txt'], '%s\n');
-    actions = {'AnswerPhone', 'DriveCar', 'Eat', 'FightPerson', ...
-        'GetOutCar', 'HandShake', 'HugPerson', 'Kiss','Run', ...
-        'SitDown', 'SitUp', 'StandUp'};
-l = length(actions);
-
-%%------------------ subsample training data ---------------------------
-
-if num_subsamp_train
-    rndidx = randperm(size(Xtrain, 1));
-    filter = rndidx(1:num_subsamp_train);
-    Xtrain = Xtrain(filter, :);
-end
+%     actions = {'AnswerPhone', 'DriveCar', 'Eat', 'FightPerson', ...
+%         'GetOutCar', 'HandShake', 'HugPerson', 'Kiss','Run', ...
+%         'SitDown', 'SitUp', 'StandUp'};
+% l = length(actions);
+% 
+% %%------------------ subsample training data ---------------------------
+% 
+% if num_subsamp_train
+%     rndidx = randperm(size(Xtrain, 1));
+%     filter = rndidx(1:num_subsamp_train);
+%     Xtrain = Xtrain(filter, :);
+% end
 
 %%------------------ run SVM to classify data---------------------------
- 
+
+l = 6; % number of action types.
+
 fprintf('start classfication with chi-squared kernel svm, computing kernel matrices......\n');
 
 [Ktrain, Ktest] = compute_kernel_matrices(Xtrain, Xtest);

@@ -80,7 +80,9 @@ params.norm_type = 1; %normalization type for svm classification
 params.eval = 'ap';
 
 params.num_vid_sizes = 1; %[void] option to use multiple video sizes
-params.unscramble = 1; %set 1 Hollywood2: deal with multiple labels/clip
+% params.unscramble = 1; %set 1 Hollywood2: deal with multiple labels/clip 
+params.unscramble = 0; %kth doesn't need unscramble
+
 
 % -- dense sampling params --
 % how densely we sample the videos. We commonly use: 1,1,1 non-overlap,
