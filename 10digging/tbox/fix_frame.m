@@ -15,7 +15,7 @@ function I = fix_frame(I, spatial_size)
 % -------------
 % I: cropped image
 
-if ndims(I) == 4
+if ndims(I) == 3
     I = rgb2gray(I);
 end
 I = double(I) / 255.0;
