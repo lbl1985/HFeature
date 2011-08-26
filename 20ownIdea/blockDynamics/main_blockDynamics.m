@@ -22,15 +22,20 @@ for wordId = 25
     index = find(train_label_all{1}{1} == wordId);
     featureIndexForVideo = getFeatureIndexForVideo(index, train_indices{1});
     videoPatchAll = [];
+    i = 1;
     while i ~= size(featureIndexForVideo, 1)
 %     for i = 1 : size(featureIndexForVideo, 1)
-        M = loadingData(datasetName, dataFolder, all_train_files{i}, fovea);
+        videoIndex = featureIndexForVideo(i, 1);
+        M = loadingData(datasetName, dataFolder, all_train_files{videoIndex}, fovea);
         videoSample = transact_dense_samp_raw(M, fovea, params);
-        sameTypeIndexInSameVideo = find(featureIndexForVideo(:, 1) == featureIndexForVideo(i));
+        sameTypeIndexInSameVideo = find(featureIndexForVideo(:, 1) == videoIndex);
         for j = 1 : length(sameTypeIndexInSameVideo)
-            videoPatch = cat(1, videoPatch, {reshape(videoSample, [fovea.spatial_size ...
-                fovea.spatial_size fovea.temporal_size])});
+            writenum(sameTypeIndexInSameVideo(j));
+            colIndex = featureIndexForVideo(sameTypeIndexInSameVideo(j), 2);
+            videoPatch = reshape(videoSample(:, colIndex), [fovea.spatial_size ...
+                fovea.spatial_size fovea.temporal_size]);
+            videoPatchAll = cat(1, videoPatchAll, {videoPatch});
         end
-        i = j;        
+        i = sameTypeIndexInSameVideo(end) + 1;        
     end
 end
