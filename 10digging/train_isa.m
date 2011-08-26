@@ -23,9 +23,9 @@ fprintf('size of X: %dx%d\n', size(X,1), size(X,2));
 
 fprintf('Removing DC component\n')
 
-% X = removeDC(X);
-clear X;
-load X_removeDC
+X = removeDC(X);
+% clear X;
+% load X_removeDC
 
 if params.layer ==3
     act_l1_pool_list = removeDC(act_l1_pool_list);

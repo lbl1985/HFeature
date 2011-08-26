@@ -42,6 +42,22 @@ classdef croppedVideoVar < video.videoVar
             obj = backupOrigVideo(obj);
             obj = fitCroppedIntoSlot(obj);
         end
+        
+        function obj = calculateSizeOfFeatureDetection(obj)
+            % without really cropping the video, only calcuate the video
+            % size after cropping. This function is not used for
+            % visualization only for export to featureIndex class 
+            obj.croppedVideo = [];
+            obj.croppedSiz = [];
+            obj.siz = [floor(obj.siz(1) / obj.spatial_size) * obj.spatial_size ...
+                floor(obj.siz(2) / obj.spatial_size) * obj.spatial_size ...
+                floor(obj.nFrame/obj.temporal_size) * obj.temporal_size];
+            if obj.ndim == 4
+                obj.siz = [obj.siz(1) obj.siz(2) 3 obj.siz(3)];
+            end
+            obj.Data = [];
+            obj.nFrame = obj.siz(end);
+        end
     end
     
     methods % Utility Function

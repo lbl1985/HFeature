@@ -6,6 +6,9 @@ end
 if ismac
     cmd = '"/usr/local/git/bin/git"';
 end
+if isunix
+    cmd = '"/usr/bin/git"';
+end
         
 for i = 1:numel(varargin)
     cmd = [cmd ' ' varargin{i}];
