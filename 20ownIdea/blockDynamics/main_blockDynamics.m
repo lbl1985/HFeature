@@ -1,6 +1,8 @@
 clear
 baseFolder = getProjectBaseFolder();
 datasetName = 'hw2';
+
+subspaceDim = 5;
 switch datasetName
     case 'hw2'
         % This is using HW2 training data
@@ -26,4 +28,10 @@ for wordId = 25
     featureIndexForVideo = getFeatureIndexForVideo(index, train_indices{1});
     wordPatches = getWordPatches(featureIndexForVideo, all_train_files, ...
         datasetName, dataFolder, fovea, params);
+    
 end
+
+wordPatchesArray = getWordPatchesArray(wordPatches, fovea);
+wordPatchesArrayRemoveDC = removeDC(wordPatchesArray);
+[U S V] = pca(wordPatchesArrayRemoveDC);
+wordPatchesArrayProjected = 
