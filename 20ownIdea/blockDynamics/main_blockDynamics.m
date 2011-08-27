@@ -2,7 +2,9 @@ clear
 baseFolder = getProjectBaseFolder();
 datasetName = 'hw2';
 
-subspaceDim = 5;
+subspaceDim_pca = 5;
+subspaceDim_hankel = 1;
+hankelWindowSize = 4;
 switch datasetName
     case 'hw2'
         % This is using HW2 training data
@@ -31,7 +33,24 @@ for wordId = 25
     
 end
 
-wordPatchesArray = getWordPatchesArray(wordPatches, fovea);
+wordPatchesArray = reshape(assembleCellData2Array(wordPatches, 4), ...
+    fovea.spatial_size * fovea.spatial_size, []);
 wordPatchesArrayRemoveDC = removeDC(wordPatchesArray);
 [U S V] = pca(wordPatchesArrayRemoveDC);
-wordPatchesArrayProjected = 
+wordPatchesArrayProjected = U(1:subspaceDim_pca, :) * wordPatchesArrayRemoveDC;
+
+wordHankelPatches = cell(length(wordPatches), 1);
+wordHankelSubspaces = cell(length(wordPatches), 1);
+
+for i = 1 : length(wordPatches)
+    colNum = (i - 1) * fovea.temporal_size + 1 : i * fovea.temporal_size;
+    wordHankelPatches{i} = hankelConstruction(wordPatchesArrayProjected(:, colNum), hankelWindowSize);
+    [U S V] = svd(wordHankelPatches{i});
+    wordHankelSubspaces{i} = U(:, 1 : subspaceDim_hankel);
+end
+
+wordHankelSubspacesArray = assembleCellData2Array(wordHankelSubspaces, 2);
+
+spaceAngle = acos(wordHankelSubspacesArray(:, 1)' * wordHankelSubspacesArray);
+bins = 0 : pi/ 100 : pi;
+hist(spaceAngle, bins);
