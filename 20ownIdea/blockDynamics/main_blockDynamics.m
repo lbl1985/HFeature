@@ -2,7 +2,7 @@ clear
 baseFolder = getProjectBaseFolder();
 datasetName = 'hw2';
 
-subspaceDim_pca = 5;
+subspaceDim_pca = 2;
 subspaceDim_hankel = 1;
 hankelWindowSize = 4;
 switch datasetName
