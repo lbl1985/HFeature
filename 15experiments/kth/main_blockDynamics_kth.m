@@ -24,7 +24,7 @@ fovea = getFovea(isanetwork);
 % featureOrderFileIndex = featureIndex2FileIndex(train_indices{1});
 numWord = max(train_label_all{1}{1});
 
-for wordId = 46
+for wordId = 1 : numWord
     index = find(train_label_all{1}{1} == wordId);
     featureIndexForVideo = getFeatureIndexForVideo(index, train_indices{1});
     wordPatches = getWordPatches(featureIndexForVideo, all_train_files, ...
