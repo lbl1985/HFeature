@@ -2,9 +2,6 @@ clear
 baseFolder = getProjectBaseFolder();
 datasetName = 'hw2';
 
-subspaceDim_pca = 2;
-subspaceDim_hankel = 1;
-hankelWindowSize = 4;
 switch datasetName
     case 'hw2'
         % This is using HW2 training data
@@ -27,7 +24,7 @@ fovea = getFovea(isanetwork);
 % featureOrderFileIndex = featureIndex2FileIndex(train_indices{1});
 numWord = max(train_label_all{1}{1});
 
-for wordId = 25
+for wordId = 46
     index = find(train_label_all{1}{1} == wordId);
     featureIndexForVideo = getFeatureIndexForVideo(index, train_indices{1});
     wordPatches = getWordPatches(featureIndexForVideo, all_train_files, ...
@@ -36,25 +33,11 @@ for wordId = 25
     '.mat']), wordPatches);
 end
 
+inWordId = 46;
 
-wordPatchesArray = reshape(assembleCellData2Array(wordPatches, 4), ...
-    fovea.spatial_size * fovea.spatial_size, []);
-wordPatchesArrayRemoveDC = removeDC(wordPatchesArray);
-[U S V] = pca(wordPatchesArrayRemoveDC);
-wordPatchesArrayProjected = U(1:subspaceDim_pca, :) * wordPatchesArrayRemoveDC;
+params_subspace.subspaceDim_pca = 2;
+params_subspace.subspaceDim_hankel = 1;
+params_subspace.hankelWindowSize = 4;
+params_subspace.fovea = fovea;
 
-wordHankelPatches = cell(length(wordPatches), 1);
-wordHankelSubspaces = cell(length(wordPatches), 1);
-
-for i = 1 : length(wordPatches)
-    colNum = (i - 1) * fovea.temporal_size + 1 : i * fovea.temporal_size;
-    wordHankelPatches{i} = hankelConstruction(wordPatchesArrayProjected(:, colNum), hankelWindowSize);
-    [U S V] = svd(wordHankelPatches{i});
-    wordHankelSubspaces{i} = U(:, 1 : subspaceDim_hankel);
-end
-
-wordHankelSubspacesArray = assembleCellData2Array(wordHankelSubspaces, 2);
-
-spaceAngle = acos(wordHankelSubspacesArray(:, 1)' * wordHankelSubspacesArray);
-bins = 0 : pi/ 100 : pi;
-hist(spaceAngle, bins);
+patchSubspaces(inWordId, params_subspace);
