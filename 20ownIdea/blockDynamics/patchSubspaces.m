@@ -19,7 +19,10 @@ nPatches = length(wordPatches);
 wordPatchesArray = reshape(assembleCellData2Array(wordPatches, 4), ...
     fovea.spatial_size * fovea.spatial_size, []);
 wordPatchesArrayRemoveDC = removeDC(wordPatchesArray);
-[U, ~, ~] = pca(wordPatchesArrayRemoveDC);
+
+[U, ~, D] = pca(wordPatchesArrayRemoveDC);
+figure(); plot(1:min(size(D)), diag(D));
+
 wordPatchesArrayProjected = U(1:subspaceDim_pca, :) * wordPatchesArrayRemoveDC;
 
 wordHankelPatches = cell(length(wordPatches), 1);
@@ -43,4 +46,4 @@ spaceAngle = acos(abs(wordHankelSubspacesArray(:, 1 : subspaceDim_hankel)' * ...
     wordHankelSubspacesArray));
 
 bins = 0 : pi/ 100 : pi;
-hist(spaceAngle, bins);
+figure(); hist(spaceAngle, bins);
