@@ -1,7 +1,6 @@
 clear
 baseFolder = getProjectBaseFolder();
-% datasetName = 'hw2';
-datasetName = 'kth';
+datasetName = 'hw2';
 
 subspaceDim_pca = 2;
 subspaceDim_hankel = 1;
@@ -31,7 +30,6 @@ for wordId = 25
     featureIndexForVideo = getFeatureIndexForVideo(index, train_indices{1});
     wordPatches = getWordPatches(featureIndexForVideo, all_train_files, ...
         datasetName, dataFolder, fovea, params);
-    
 end
 
 wordPatchesArray = reshape(assembleCellData2Array(wordPatches, 4), ...
