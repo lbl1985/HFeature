@@ -53,9 +53,9 @@ for i = 1 : nPatches
     spaceAngle(i) = subspace(wordHankelSubspaces{1}, wordHankelSubspaces{i});
 end
 
-wordHankelSubspacesArray = assembleCellData2Array(wordHankelSubspaces, 2);
-spaceAngle = acos(abs(wordHankelSubspacesArray(:, 1 : subspaceDim_hankel)' * ...
-    wordHankelSubspacesArray));
+% wordHankelSubspacesArray = assembleCellData2Array(wordHankelSubspaces, 2);
+% spaceAngle = acos(abs(wordHankelSubspacesArray(:, 1 : subspaceDim_hankel)' * ...
+%     wordHankelSubspacesArray));
 
 bins = 0 : pi/ 100 : pi;
 h = figure(1); hist(spaceAngle, bins);
