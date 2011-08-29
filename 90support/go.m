@@ -2,6 +2,9 @@ function go(str)
 
 if isunix
     workingpath = '/home/binlong/Documents/MATLAB/';
+    if ~exist(workingpath, 'dir')
+        workingpath = '/home/binlongli/Documents/MATLAB/';
+    end
 end
 
 if ispc
