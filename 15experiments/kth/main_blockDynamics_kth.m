@@ -30,7 +30,7 @@ for wordId = 46
     wordPatches = getWordPatches(featureIndexForVideo, all_train_files, ...
         datasetName, dataFolder, fovea, params);
     save(fullfile(dataSavingFolder, ['videoPatchAll_Word' num2str(wordId) ...
-    '.mat']), wordPatches);
+    '.mat']), 'wordPatches');
 end
 
 inWordId = 46;
