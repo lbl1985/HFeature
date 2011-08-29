@@ -1,7 +1,6 @@
 clear
 baseFolder = getProjectBaseFolder();
-% datasetName = 'hw2';
-datasetName = 'kth';
+datasetName = 'hw2';
 
 subspaceDim_pca = 2;
 subspaceDim_hankel = 1;
@@ -15,10 +14,12 @@ switch datasetName
         load(fullfile(baseFolder, 'Results', 'VisualMedianData', 'trainKmeans_excpt_Xtrain_raw.mat'));
         load(fullfile(baseFolder, '10digging', 'bases', 'isa2layer_16t20_ts10t14_nf200_gs2_st4t4_l1_isa1layer_16_10_300_1'));
         dataFolder = fullfile(baseFolder, 'AVIClips05/');
+        dataSavingFolder = fullfile(baseFolder, 'Results', 'hw2');
     case 'kth'
         load(fullfile(baseFolder, 'Results', 'kth', 'VisualMedianData', 'visTrainMedianData_all.mat'));
         load(fullfile(baseFolder, '15experiments', 'kth', 'bases', 'isa2layer_16t20_ts10t14_nf200_gs2_st4t4_l1_isa1layer_16_10_300_1'));
         dataFolder = fullfile(baseFolder, '15experiments', 'kth', 'kth_selectFrames/');
+        dataSavingFolder = fullfile(baseFolder, 'Results', 'kth');
 end
 
 fovea = getFovea(isanetwork);
@@ -31,7 +32,10 @@ for wordId = 46
     featureIndexForVideo = getFeatureIndexForVideo(index, train_indices{1});
     wordPatches = getWordPatches(featureIndexForVideo, all_train_files, ...
         datasetName, dataFolder, fovea, params);
+    save(fullfile(dataSavingFolder, ['videoPatchAll_Word' num2str(wordId) ...
+    '.mat']), wordPatches);
 end
+
 
 wordPatchesArray = reshape(assembleCellData2Array(wordPatches, 4), ...
     fovea.spatial_size * fovea.spatial_size, []);
