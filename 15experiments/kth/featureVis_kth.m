@@ -28,8 +28,8 @@ for i = checkingIndex
     tmpClassLabel = train_label_all{1}{1}(train_indices{1}{i}.start : train_indices{1}{i}.end);
 
     coverFlowObj = coverflow.coverFlowClassLabel(tmpMovieObj, tmpClassLabel);
-%     coverFlowObj.visualizeOnImage;
-    coverFlowObj.saveKeyFramesAsFig;
+    coverFlowObj.visualizeOnImage;
+%     coverFlowObj.saveKeyFramesAsFig;
 
     
     clear coverFlowObj
