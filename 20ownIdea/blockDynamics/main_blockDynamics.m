@@ -1,15 +1,11 @@
 clear
 baseFolder = getProjectBaseFolder();
-<<<<<<< HEAD
 % datasetName = 'hw2';
 datasetName = 'kth';
-=======
-datasetName = 'hw2';
 
 subspaceDim_pca = 2;
 subspaceDim_hankel = 1;
 hankelWindowSize = 4;
->>>>>>> blockDynamics
 switch datasetName
     case 'hw2'
         % This is using HW2 training data
