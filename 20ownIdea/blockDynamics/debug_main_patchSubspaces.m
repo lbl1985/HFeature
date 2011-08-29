@@ -3,7 +3,7 @@ load videoPatchAll_Word25
 
 fovea.spatial_size = 20; fovea.temporal_size = 14;
 
-subspaceDim_pca = 3;
+subspaceDim_pca = 5;
 subspaceDim_hankel = 1;
 hankelWindowSize = 4;
 nPatches = length(wordPatches);
