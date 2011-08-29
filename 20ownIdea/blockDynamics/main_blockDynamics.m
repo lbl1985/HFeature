@@ -35,7 +35,7 @@ end
 
 inWordId = 46;
 
-params_subspace.subspaceDim_pca = 2;
+params_subspace.subspaceDim_pca = 3;
 params_subspace.subspaceDim_hankel = 1;
 params_subspace.hankelWindowSize = 4;
 params_subspace.fovea = fovea;
