@@ -40,4 +40,4 @@ params_subspace.subspaceDim_hankel = 1;
 params_subspace.hankelWindowSize = 4;
 params_subspace.fovea = fovea;
 
-patchSubspaces(inWordId, params_subspace);
+patchSubspaces(inWordId, params_subspace, dataSavingFolder);
