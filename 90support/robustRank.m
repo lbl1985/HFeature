@@ -5,6 +5,9 @@ function rank = robustRank(d, ratio, isPlot)
 
 perD = cumsum(d) / sum(d);
 rank = find(perD < ratio, 1, 'last' );
+if isempty(rank)
+    rank = 1;
+end
 if isPlot
     figure(); plot(1:length(d), d);
 end
