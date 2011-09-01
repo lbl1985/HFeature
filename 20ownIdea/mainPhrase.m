@@ -19,20 +19,14 @@ blockSubspacesBatch = [];
 
 nFiles = length(all_train_files);
 for i = 1 : nFiles
-    tmpMovieName = fullfile(params.avipath, [all_train_files{i} '.avi']);
-    if ~exist(tmpMovieName, 'file')
-        error('the file %s is not available', tmpMovieName);
-    end
-    tmpMovieVar = movie2var(tmpMovieName, 0, 1);
+    featureIndexObj = blockSubspace.getFeatureIndexObj(i, all_train_files, params);
     
-    tmpMovieObj = video.croppedVideoVar(tmpMovieVar, fovea);
-    tmpMovieSizeObj = tmpMovieObj.calculateSizeOfFeatureDetection();
-    
-    featureIndexObj = featureIndex(tmpMovieSizeObj);
-    tmpFeatureMatrix = Xtrain_raw{1}(train_indices{i}.start : train_indices{i}.end, :);
+    tmpFeatureMatrix = blockSubspace.getFeatureMatrix(i, train_indices, train_label_all{1}{1});
     
     tmpHankelVideo = blockSubspace.blockHankelConstruction(hankelWindowSize, ...
         tmpFeatureMatrix, featureIndexObj);
+    tmpPhraseEachVideo = phrase.getPhraseEachVideo(tmpFeatureMatrix, featureIndexObj, 2);
+    
     if (~isempty(tmpHankelVideo{1}))
         tmpSubspacesVideo = blockSubspace.blockSubspacesCal(tmpHankelVideo, nSubspaces, subspaceDimension);
 
