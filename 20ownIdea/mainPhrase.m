@@ -8,6 +8,7 @@ load(fullfile(baseFolder, '10digging', 'bases', 'isa2layer_16t20_ts10t14_nf200_g
 
 fovea.spatial_size = isanetwork{1}.spatial_size; 
 fovea.temporal_size = isanetwork{1}.temporal_size;
+params.fovea = fovea;
 params.avipath = fullfile(baseFolder, 'AVIClips05/');
 all_train_files = all_train_files(1 : length(train_indices)); 
 
@@ -16,6 +17,7 @@ nSubspaces = 1;
 subspaceDimension =  size(isanetwork{1}.W, 1) * hankelWindowSize;
 blockHankelBatch = [];
 blockSubspacesBatch = [];
+labelPhraseAll = [];
 
 nFiles = length(all_train_files);
 for i = 1 : nFiles
@@ -23,19 +25,10 @@ for i = 1 : nFiles
     
     tmpFeatureMatrix = blockSubspace.getFeatureMatrix(i, train_indices, train_label_all{1}{1});
     
-    tmpHankelVideo = blockSubspace.blockHankelConstruction(hankelWindowSize, ...
-        tmpFeatureMatrix, featureIndexObj);
     tmpPhraseEachVideo = phrase.getPhraseEachVideo(tmpFeatureMatrix, featureIndexObj, 2);
-    
-    if (~isempty(tmpHankelVideo{1}))
-        tmpSubspacesVideo = blockSubspace.blockSubspacesCal(tmpHankelVideo, nSubspaces, subspaceDimension);
-
-        train_indices{i}.blockHankelIndex.start = size(blockSubspacesBatch, 2) + 1; %#ok<*SAGROW>
-        train_indices{i}.blockHankelIndex.end   = size(blockSubspacesBatch, 2) + featureIndexObj.numFeaturePerFrame;
-
-        blockHankelBatch = cat(1, blockHankelBatch, tmpHankelVideo);
-        blockSubspacesBatch = cat(2, blockSubspacesBatch, tmpSubspacesVideo);
-    end
+    train_indices{i}.blockPhraseIndex.start = size(labelPhraseAll, 1) + 1; %#ok<*SAGROW>
+    labelPhraseAll = cat(1, labelPhraseAll, tmpPhraseEachVideo);
+    train_indices{i}.blockPhraseIndex.end   = size(labelPhraseAll, 1);
     
     writenum(i);
 end

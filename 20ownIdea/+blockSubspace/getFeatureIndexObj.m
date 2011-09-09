@@ -1,4 +1,5 @@
 function featureIndexObj = getFeatureIndexObj(i, all_train_files, params)
+    fovea = params.fovea;
     tmpMovieName = fullfile(params.avipath, [all_train_files{i} '.avi']);
     if ~exist(tmpMovieName, 'file')
         error('the file %s is not available', tmpMovieName);
