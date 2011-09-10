@@ -1,9 +1,9 @@
 clear
 baseFolder = getProjectBaseFolder();
-dataFolder = fullfile(baseFolder, 'Results', 'VisualMedianData');
+dataFolder = fullfile(baseFolder, 'Results', 'kth', 'VisualMedianData');
 videoFolder = fullfile(baseFolder, '15experiments', 'kth', 'kth_selectFrames');
 % Training Section
-load(fullfile(baseFolder, 'Results', 'kth', 'VisualMedianData', 'visTrainMedianData_all.mat'));
+load(fullfile(dataFolder, 'visTrainMedianData_all.mat'));
 load(fullfile(baseFolder, '15experiments', 'kth', 'bases', ...
     'isa2layer_16t20_ts10t14_nf200_gs2_st4t4_l1_isa1layer_16_10_300_1'));
 
@@ -14,7 +14,8 @@ save(fullfile(dataFolder, 'phraseTrain.mat'), 'labelPhraseAll_train', 'train_Phr
 
 % Testing Section
 
-load(fullfile(baseFolder, 'Results', 'kth', 'VisualMedianData', 'visTrainMedianData_all.mat'));
+load(fullfile(dataFolder, 'visTestMedianData_all.mat'));
 [labelPhraseAll_test test_PhraseIndices] = phrase.getPhraseBatch(test_indices{1}, ...
     test_label_all, all_test_files, isanetwork, videoFolder);
 save(fullfile(dataFolder, 'phraseTest.mat'), 'labelPhraseAll_test', 'test_PhraseIndices');
+display('Done');
