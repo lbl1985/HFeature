@@ -39,4 +39,4 @@ save(fullfile(dataFolder, 'phraseTest.mat'), 'testPhraseFeatureAll', ...
     'testPhraseIndices', 'testPhraseLabelAll');
 % display('Done');
 
-rerun_ap_phrase
+phrase.rerun_ap_phrase

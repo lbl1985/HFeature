@@ -1,4 +1,5 @@
 % function rerun_ap_phrase
+clc
 mean_ap_list = zeros(params.num_km_init_phrase, params.num_km_init_word);
 mean_acc_list = zeros(params.num_km_init_phrase, params.num_km_init_word);
 
@@ -6,8 +7,8 @@ for ini_idx_word = 1 : params.num_km_init_word
     for ini_idx_phrase = 1 : params.num_km_init_phrase
         fprintf('binning VQ labels... \n');
         %%------------------ form svm inputs by binning ----------------------
-        Xtrain = formhist_phrase(trainPhraseLabelAll, trainPhraseIndices, params, length(all_train_files), ini_idx_word, ini_idx_phrase);
-        Xtest  = formhist_phrase(testPhraseLabelAll, testPhraseIndices, params, length(all_test_files), ini_idx_word, ini_idx_phrase);
+        Xtrain = phrase.formhist_phrase(trainPhraseLabelAll, trainPhraseIndices, params, length(all_train_files), ini_idx_word, ini_idx_phrase);
+        Xtest  = phrase.formhist_phrase(testPhraseLabelAll, testPhraseIndices, params, length(all_test_files), ini_idx_word, ini_idx_phrase);
 
 
         %%------------------ run SVM to classify data---------------------------

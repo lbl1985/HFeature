@@ -28,3 +28,7 @@ params.eval = 'ap';
 params.num_vid_sizes = 1; %[void] option to use multiple video sizes
 % params.unscramble = 1; %set 1 Hollywood2: deal with multiple labels/clip 
 params.unscramble = 0; %kth doesn't need unscramble
+% Where to read the ground truth label information.
+params.infopath = [];
+% phraseWindowSize: each phrase contains how many words
+params.phraseWindowSize = 3;
