@@ -13,8 +13,8 @@ nFiles = length(all_train_files);
 for i = 1 : nFiles
     featureIndexObj = blockSubspace.getFeatureIndexObj(i, all_train_files, params);
     
-    for j = 1 : nKmeans
-        tmpFeatureMatrix = blockSubspace.getFeatureMatrix(i, train_indices, train_label_all{1}{j});
+    for j = 1 : params.num_km_init_word
+        tmpFeatureMatrix = blockSubspace.getFeatureMatrix(i, train_indices, train_label_all{1, j}{1});
     
         tmpPhraseEachVideo = phrase.getPhraseEachVideo(tmpFeatureMatrix, featureIndexObj, 2);
         if j == 1
