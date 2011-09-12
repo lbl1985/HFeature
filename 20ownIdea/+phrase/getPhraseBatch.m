@@ -1,11 +1,7 @@
 function [labelPhraseAll train_indices] =  getPhraseBatch(train_indices, ...
-    train_label_all, all_train_files, isanetwork, avipath)
+    train_label_all, all_train_files, params)
 % Functionalize mainPhrase.m
 
-fovea.spatial_size = isanetwork{1}.spatial_size; 
-fovea.temporal_size = isanetwork{1}.temporal_size;
-params.fovea = fovea;
-params.avipath = avipath;
 all_train_files = all_train_files(1 : length(train_indices)); 
 
 labelPhraseAll = [];
