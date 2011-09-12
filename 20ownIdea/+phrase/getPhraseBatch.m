@@ -18,11 +18,13 @@ for i = 1 : nFiles
     
         tmpPhraseEachVideo = phrase.getPhraseEachVideo(tmpFeatureMatrix, featureIndexObj, 2);
         if j == 1
-            train_indices{i}.blockPhraseIndex.start = size(labelPhraseAll{j}, 1) + 1; %#ok<*SAGROW>
+            train_indices{i}.start = size(labelPhraseAll{j}, 1) + 1; %#ok<*SAGROW>
+            train_indices{i}.ds_sections.start = train_indices{i}.start;
         end
         labelPhraseAll{j} = cat(1, labelPhraseAll{j}, tmpPhraseEachVideo);
         if j == 1
-            train_indices{i}.blockPhraseIndex.end   = size(labelPhraseAll{j}, 1);
+            train_indices{i}.end   = size(labelPhraseAll{j}, 1);
+            train_indices{i}.ds_sections.end = train_indices{i}.end;
         end
     end
     

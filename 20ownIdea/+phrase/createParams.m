@@ -8,3 +8,23 @@ params.num_km_init_word = 3;
 params.num_km_init_phrase = 3;
 params.seed = 10; %random seed for kmeans
 params.num_centroids = 50;
+
+%norm binning & filtering (disregard, leave values)
+params.usenormbin = 1; %
+params.normbinexp = 1; %
+params.filtermotion = 0; %
+
+%svm kernel
+params.kernel = 'chisq';
+
+params.pydheight = 1;
+
+params.norm_type = 1; %normalization type for svm classification
+% [L1-norm]: recommended for chi-squared svm kernel
+
+%evaluation method: 'ap' average precision (one-vs-all, multiple labels per datapoint), 
+params.eval = 'ap';
+
+params.num_vid_sizes = 1; %[void] option to use multiple video sizes
+% params.unscramble = 1; %set 1 Hollywood2: deal with multiple labels/clip 
+params.unscramble = 0; %kth doesn't need unscramble

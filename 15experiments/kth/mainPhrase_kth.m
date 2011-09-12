@@ -13,15 +13,15 @@ params = phrase.createParams(baseFolder, isanetwork);
 [trainPhraseFeatureAll trainPhraseIndices] = phrase.getPhraseBatch(train_indices{1}, ...
     train_label_all, all_train_files, params);
 
-trainLabelAll = cell(1, params.num_km_init_word);
+trainPhraseLabelAll = cell(1, params.num_km_init_word);
 trainCenterAll = cell(1, params.num_km_init_word);
 train_km_obj = cell(1, params.num_km_init_word);
 for i = 1 : params.num_km_init_word
-    [trainLabelAll{i} trainCenterAll{i} train_km_obj{i}] = phrase.litekmeans_phrase(...
+    [trainPhraseLabelAll{i} trainCenterAll{i} train_km_obj{i}] = phrase.litekmeans_phrase(...
         trainPhraseFeatureAll{i}, params);
 end
 save(fullfile(dataFolder, 'phraseTrain.mat'), 'trainPhraseFeatureAll', ...
-    'trainPhraseIndices', 'trainLabelAll', 'trainCenterAll', 'train_km_obj');
+    'trainPhraseIndices', 'trainPhraseLabelAll', 'trainCenterAll', 'train_km_obj');
 
 % Testing Section
 
@@ -32,9 +32,11 @@ params = phrase.createParams(baseFolder, isanetwork);
 
 for i = 1 : params.num_km_init_word
     for j = 1 : params.num_km_init_phrase
-        test_label_all{1, i}{j, 1} = find_labels_dnc(trainCenterAll{1, i}{j, 1}, testPhraseFeatureAll{i});
+        testPhraseLabelAll{1, i}{j, 1} = find_labels_dnc(trainCenterAll{1, i}{j, 1}, testPhraseFeatureAll{i});
     end
 end
 save(fullfile(dataFolder, 'phraseTest.mat'), 'testPhraseFeatureAll', ...
-    'testPhraseIndices', 'test_label_all');
+    'testPhraseIndices', 'testPhraseLabelAll');
 % display('Done');
+
+rerun_ap_phrase
