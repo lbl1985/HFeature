@@ -31,4 +31,4 @@ params.unscramble = 0; %kth doesn't need unscramble
 % Where to read the ground truth label information.
 params.infopath = [];
 % phraseWindowSize: each phrase contains how many words
-params.phraseWindowSize = 4;
+params.phraseWindowSize = 1;
