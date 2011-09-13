@@ -6,5 +6,3 @@ for i = 1 : phraseWindowSize - 1
         featureIndexObj.numFeaturePerFrame + 1 : end - ...
         (phraseWindowSize - i - 1) * featureIndexObj.numFeaturePerFrame));
 end
-
-

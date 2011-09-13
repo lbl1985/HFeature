@@ -10,8 +10,8 @@ load(fullfile(baseFolder, '15experiments', 'kth', 'bases', ...
 
 params = phrase.createParams(baseFolder, isanetwork);
 
-[trainPhraseFeatureAll trainPhraseIndices] = phrase.getPhraseBatch(train_indices{1}, ...
-    train_label_all, all_train_files, params);
+[trainPhraseFeatureAll trainPhraseIndices, MM_train_phrase] = phrase.getPhraseBatch(train_indices{1}, ...
+    train_label_all, all_train_files, MM_train, params);
 
 trainPhraseLabelAll = cell(1, params.num_km_init_word);
 trainCenterAll = cell(1, params.num_km_init_word);
@@ -21,14 +21,15 @@ for i = 1 : params.num_km_init_word
         trainPhraseFeatureAll{i}, params);
 end
 save(fullfile(dataFolder, 'phraseTrain.mat'), 'trainPhraseFeatureAll', ...
-    'trainPhraseIndices', 'trainPhraseLabelAll', 'trainCenterAll', 'train_km_obj');
+    'trainPhraseIndices', 'trainPhraseLabelAll', 'trainCenterAll', ...
+    'train_km_obj', 'MM_train_phrase');
 
 % Testing Section
 
 load(fullfile(dataFolder, 'visTestMedianData_all.mat'));
 params = phrase.createParams(baseFolder, isanetwork);
-[testPhraseFeatureAll testPhraseIndices] = phrase.getPhraseBatch(test_indices{1}, ...
-    test_label_all, all_test_files, params);
+[testPhraseFeatureAll testPhraseIndices MM_test_phrase] = phrase.getPhraseBatch(test_indices{1}, ...
+    test_label_all, all_test_files, MM_test, params);
 
 for i = 1 : params.num_km_init_word
     for j = 1 : params.num_km_init_phrase
@@ -36,7 +37,7 @@ for i = 1 : params.num_km_init_word
     end
 end
 save(fullfile(dataFolder, 'phraseTest.mat'), 'testPhraseFeatureAll', ...
-    'testPhraseIndices', 'testPhraseLabelAll');
+    'testPhraseIndices', 'testPhraseLabelAll', 'MM_test_phrase');
 % display('Done');
 
 phrase.rerun_ap_phrase
