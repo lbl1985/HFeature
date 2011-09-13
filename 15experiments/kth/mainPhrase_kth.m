@@ -1,10 +1,12 @@
 clear; clc
 baseFolder = getProjectBaseFolder();
 dataFolder = fullfile(baseFolder, 'Results', 'kth', 'VisualMedianData');
+% dataFolder = fullfile(baseFolder, 'Results', 'kth', '2011-08-26');
 
 
 % Training Section
 load(fullfile(dataFolder, 'visTrainMedianData_all.mat'));
+% load(fullfile(dataFolder, 'svm_ready_isa2layer_16t20_ts10t14_nf200_gs2_st4t4_l1_isa1layer_16_10_300_1_Nlay2_ca1_nm1000_cen50_nkms1000_1v_Frames_ds111_unb1_fm0_20110826T173020.mat'));
 load(fullfile(baseFolder, '15experiments', 'kth', 'bases', ...
     'isa2layer_16t20_ts10t14_nf200_gs2_st4t4_l1_isa1layer_16_10_300_1'));
 
