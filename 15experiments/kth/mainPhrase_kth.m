@@ -12,34 +12,35 @@ load(fullfile(baseFolder, '15experiments', 'kth', 'bases', ...
 
 params = phrase.createParams(baseFolder, isanetwork);
 
-[trainPhraseFeatureAll trainPhraseIndices, MM_train_phrase] = phrase.getPhraseBatch(train_indices{1}, ...
-    Xtrain_raw, all_train_files, MM_train, params);
+for i = 1 : params.nPhraseWindowSize
+    params.phraseWindowSize = params.phraseWindowSizeBatch(i);
+    display(['Working on PhraseWindowSize = ' num2str(params.phraseWindowSize)]);
+    % -------------- TRAIN: compute phrase features ----------------------
+    fprintf('Construct Phrase Features for all videos in the training set:\n');
+    [trainPhraseFeatureAll{i} trainPhraseIndices{i}, MM_train_phrase{i}] = phrase.getPhraseBatch(train_indices{1}, ...
+        Xtrain_raw, all_train_files, MM_train, params); 
 
-trainPhraseLabelAll = cell(1, params.num_km_init_word);
-trainCenterAll = cell(1, params.num_km_init_word);
-train_km_obj = cell(1, params.num_km_init_word);
-for i = 1 : params.num_km_init_word
-    [trainPhraseLabelAll{i} trainCenterAll{i} train_km_obj{i}] = phrase.litekmeans_phrase(...
-        trainPhraseFeatureAll{1}, params);
+    % -------------- Kmeans: over all phrase features --------------------
+    fprintf('Start vector quantization on training samples:\n');
+    [trainPhraseLabelAll{i} trainCenterAll{i} train_km_obj{i}] =  phrase.kmeans_phraseFeatures(trainPhraseFeatureAll{i}, params);
 end
-save(fullfile(dataFolder, 'phraseTrain.mat'), 'trainPhraseFeatureAll', ...
-    'trainPhraseIndices', 'trainPhraseLabelAll', 'trainCenterAll', ...
-    'train_km_obj', 'MM_train_phrase');
 
 % Testing Section
 
 load(fullfile(dataFolder, 'visTestMedianData_all.mat'));
 params = phrase.createParams(baseFolder, isanetwork);
-[testPhraseFeatureAll testPhraseIndices MM_test_phrase] = phrase.getPhraseBatch(test_indices{1}, ...
-    Xtest_raw, all_test_files, MM_test, params);
 
-for i = 1 : params.num_km_init_word
-    for j = 1 : params.num_km_init_phrase
-        testPhraseLabelAll{1, i}{j, 1} = find_labels_dnc(trainCenterAll{1, i}{j, 1}, testPhraseFeatureAll{i});
-    end
+for i = 1 : params.nPhraseWindowSize
+    params.phraseWindowSize = params.phraseWindowSizeBatch(i);
+    display(['Working on PhraseWindowSize = ' num2str(params.phraseWindowSize)]);
+    % -------------- Test: compute phrase features ----------------------
+    fprintf('Construct Phrase Features for all videos in the testing set:\n');
+    [testPhraseFeatureAll{i} testPhraseIndices{i} MM_test_phrase{i}] = phrase.getPhraseBatch(test_indices{1}, ...
+        Xtest_raw, all_test_files, MM_test, params);
+
+    % -------------- assign test samples to the nearest centers------------
+    fprintf('assigning all labels to test data......\n');
+    testPhraseLabelAll{i} = phrase.assignTestingLabel_phrase(trainCenterAll{i}, testPhraseFeatureAll{i}, params);    
 end
-save(fullfile(dataFolder, 'phraseTest.mat'), 'testPhraseFeatureAll', ...
-    'testPhraseIndices', 'testPhraseLabelAll', 'MM_test_phrase');
-% display('Done');
 
 phrase.rerun_ap_phrase
