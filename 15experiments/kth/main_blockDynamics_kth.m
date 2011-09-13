@@ -40,6 +40,8 @@ params_subspace.subspaceDim_hankel = 1;
 params_subspace.hankelWindowSize = 4;
 params_subspace.fovea = fovea;
 
+hankelWindowSizeBatchAll = cell(50, 1);
 for inWordId = 1 : numWord
-    patchSubspaces(inWordId, params_subspace, dataSavingFolder);
+    [~, hankelWindowSizeBatchAll{inWordId}, ~] = patchSubspaces(inWordId, ...
+        params_subspace, dataSavingFolder);
 end
