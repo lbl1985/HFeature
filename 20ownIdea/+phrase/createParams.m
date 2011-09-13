@@ -4,7 +4,7 @@ params.avipath = fullfile(baseFolder, '15experiments', 'kth', 'kth_selectFrames'
 params.fovea.spatial_size = isanetwork{1}.spatial_size; 
 params.fovea.temporal_size = isanetwork{1}.temporal_size;
 % params.num_km_init = 3;
-params.num_km_init_word = 3;
+params.num_km_init_word = 1;
 params.num_km_init_phrase = 3;
 params.seed = 10; %random seed for kmeans
 params.num_centroids = 50;
@@ -31,4 +31,4 @@ params.unscramble = 0; %kth doesn't need unscramble
 % Where to read the ground truth label information.
 params.infopath = [];
 % phraseWindowSize: each phrase contains how many words
-params.phraseWindowSize = 1;
+params.phraseWindowSize = 4;

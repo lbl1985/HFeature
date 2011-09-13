@@ -14,8 +14,17 @@ nFiles = length(all_train_files);
 for i = 1 : nFiles
     featureIndexObj = blockSubspace.getFeatureIndexObj(i, all_train_files, params);
     
+    tmpMM = blockSubspace.getFeatureMatrix(i, train_indices, MM{1});
+    tmpMMEachVideo = phrase.getMMEachVideo(tmpMM, featureIndexObj, ...
+            params.phraseWindowSize);
+    MM_phrase{1} = cat(1, MM_phrase{1}, tmpMMEachVideo);
+    
     for j = 1 : params.num_km_init_word
-        tmpFeatureMatrix = blockSubspace.getFeatureMatrix(i, train_indices, train_label_all{1, j}{1});
+        if iscell(train_label_all{1, j}) % Word Phrase
+            tmpFeatureMatrix = blockSubspace.getFeatureMatrix(i, train_indices, train_label_all{1, j}{1});
+        else % Raw Phrase
+            tmpFeatureMatrix = blockSubspace.getFeatureMatrix(i, train_indices, train_label_all{1, j});
+        end
         
         
         tmpPhraseEachVideo = phrase.getPhraseEachVideo(tmpFeatureMatrix, ...
@@ -34,10 +43,7 @@ for i = 1 : nFiles
         end
     end
     
-    tmpMM = blockSubspace.getFeatureMatrix(i, train_indices, MM{1});
-    tmpMMEachVideo = phrase.getMMEachVideo(tmpMM, featureIndexObj, ...
-            params.phraseWindowSize);
-    MM_phrase{1} = cat(1, MM_phrase{1}, tmpMMEachVideo);
+    
     
     writenum(i);
 end
