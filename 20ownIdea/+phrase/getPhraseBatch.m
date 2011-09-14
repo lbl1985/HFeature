@@ -45,5 +45,5 @@ for i = 1 : nFiles
     
     
     
-    writenum(i);
+    writenum2(i);
 end

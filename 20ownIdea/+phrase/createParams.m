@@ -32,6 +32,6 @@ params.unscramble = 0; %kth doesn't need unscramble
 params.infopath = [];
 % phraseWindowSize: each phrase contains how many words
 % params.phraseWindowSize = 1;
-params.phraseWindowSizeBatch = [1 2];
+params.phraseWindowSizeBatch = [1 : 8];
 
 params.nPhraseWindowSize = length(params.phraseWindowSizeBatch);
