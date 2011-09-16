@@ -22,3 +22,4 @@ addpath(genpath(fullfile(workingpath, '15experiments')));
 addpath(genpath(fullfile(workingpath, '20ownIdea')));
 addpath(genpath(fullfile(workingpath, '90support')));
 addpath(genpath(fullfile(workingpath, 'Results')));
+addpath(genpath(fullfile(workingpath, '25HSTLN')));
