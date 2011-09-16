@@ -61,4 +61,9 @@ end
 
 Xall = Xall(1:Xall_fill-1,:);
 
+if length(data_file_names) == 378
+    save trainHSTLN Xall indices
+else
+    save testHSTLN Xtest indices
+end
 end
