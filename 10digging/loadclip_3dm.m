@@ -1,6 +1,9 @@
 function M = loadclip_3dm(file, spatial_size, fast, smooth)
-
-    readerobj = mmread(file, [], [], false, true);
+    try
+        readerobj = mmread(file, [], [], false, true);
+    catch ME
+        readerobj = mmreader2mmread(file);
+    end
 
     vidFrames = readerobj.frames;
     l = length(vidFrames);
