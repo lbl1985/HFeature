@@ -11,7 +11,7 @@ checkFolder(params.savepath);
 % params.jacketenginepath = '/**/jacket/engine/'; % option to use Jacket GPU code for MATLAB http://www.accelereyes.com/
 
 % option: dense sampling parameter
-dense_p = 1;
+dense_p = 2;
 % 1 for non-overlap grid sampling of features
 % 2 for 50% overlap grid sampling of features
 %%
