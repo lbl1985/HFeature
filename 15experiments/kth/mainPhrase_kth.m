@@ -43,4 +43,5 @@ for i = 1 : params.nPhraseWindowSize
     testPhraseLabelAll{i} = phrase.assignTestingLabel_phrase(trainCenterAll{i}, testPhraseFeatureAll{i}, params);    
 end
 
+% Classification section
 phrase.rerun_ap_phrase

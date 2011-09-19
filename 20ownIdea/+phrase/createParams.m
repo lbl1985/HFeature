@@ -30,6 +30,8 @@ params.num_vid_sizes = 1; %[void] option to use multiple video sizes
 params.unscramble = 0; %kth doesn't need unscramble
 % Where to read the ground truth label information.
 params.infopath = [];
+% whether we use the MM
+params.isMM = 0;
 % phraseWindowSize: each phrase contains how many words
 % params.phraseWindowSize = 1;
 params.phraseWindowSizeBatch = [1 : 8];
