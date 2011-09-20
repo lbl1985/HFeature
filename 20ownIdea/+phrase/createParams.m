@@ -34,6 +34,6 @@ params.infopath = [];
 params.isMM = 0;
 % phraseWindowSize: each phrase contains how many words
 % params.phraseWindowSize = 1;
-params.phraseWindowSizeBatch = [1 : 8];
+params.phraseWindowSizeBatch = [1 : 3];
 
 params.nPhraseWindowSize = length(params.phraseWindowSizeBatch);
