@@ -16,7 +16,7 @@ classdef featureIndex
     
     methods
         function obj = featureIndex(inputVideoSize)
-            assert(isobject(inputVideoSize), '1st input should be croppedVideoObject');
+%             assert(isobject(inputVideoSize), '1st input should be croppedVideoObject');
             
             obj.videoSize = inputVideoSize;
             
